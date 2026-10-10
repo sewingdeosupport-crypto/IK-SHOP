@@ -1,1 +1,123 @@
 
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IK SHOP</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      color: #222;
+    }
+    header {
+      background: #126b50;
+      color: white;
+      text-align: center;
+      padding: 24px 12px;
+    }
+    header h1 { margin: 0 0 8px; }
+    main {
+      max-width: 850px;
+      margin: 28px auto;
+      padding: 16px;
+    }
+    .product {
+      background: white;
+      border-radius: 12px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: 0 3px 12px #00000012;
+    }
+    .product img {
+      width: 100%;
+      max-width: 300px;
+      height: 220px;
+      object-fit: contain;
+    }
+    form {
+      background: white;
+      margin-top: 22px;
+      padding: 22px;
+      border-radius: 12px;
+    }
+    label { display: block; margin-top: 14px; }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font: inherit;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      background: #126b50;
+      color: white;
+      border: 0;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    footer { text-align: center; padding: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>IK SHOP</h1>
+    <p>BIRANI RISE, ORDER NOW </p>
+  </header>
+
+  <main>
+    <section class="product">
+      <img
+        src="https://placehold.co/300x220?text=Your+Product"
+        alt="https://www.amazon.in/Daawat-Biryani-Basmati-Rice-1kg/dp/B00NXPAG2Q"
+      >
+      <h2>আমার পণ্য</h2>
+      <p>PRISE: ₹500</p>
+      <p>অর্ডার করতে নিচের ফর্মটি পূরণ করুন।</p>
+    </section>
+
+    <form id="orderForm">
+      <h2>অর্ডার ফর্ম</h2>
+
+      <label for="name">আপনার নাম</label>
+      <input id="name" name="name" required>
+
+      <label for="phone">মোবাইল নম্বর</label>
+      <input id="phone" name="phone"
+        type="tel" required>
+
+      <label for="address">সম্পূর্ণ ঠিকানা</label>
+      <textarea id="address" name="address"
+        rows="3" required></textarea>
+
+      <label for="quantity">পণ্যের পরিমাণ</label>
+      <input id="quantity" name="quantity"
+        type="number" min="1" value="1" required>
+
+      <button type="submit">অর্ডার করুন</button>
+      <p id="message" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <footer>
+    © 2026 IK SHOP
+  </footer>
+
+  <script>
+    document.getElementById("orderForm")
+      .addEventListener("submit", function(event) {
+        event.preventDefault();
+        document.getElementById("message").textContent =
+          "ফর্মটি তৈরি হয়েছে। অর্ডার পাঠানোর ব্যবস্থা এখনও যুক্ত করা হয়নি।";
+      });
+  </script>
+</body>
+</html>
