@@ -1,123 +1,283 @@
-
+```html
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IK SHOP</title>
+
+  <title>My Online Shop - Place Your Order</title>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
+      padding: 25px 15px;
       font-family: Arial, sans-serif;
-      background: #f5f6fa;
+      background: #f3f6f4;
       color: #222;
     }
-    header {
-      background: #126b50;
-      color: white;
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 25px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .shop-title {
       text-align: center;
-      padding: 24px 12px;
+      color: #16834a;
+      margin-bottom: 8px;
     }
-    header h1 { margin: 0 0 8px; }
-    main {
-      max-width: 850px;
-      margin: 28px auto;
-      padding: 16px;
-    }
-    .product {
-      background: white;
-      border-radius: 12px;
-      padding: 22px;
+
+    .subtitle {
       text-align: center;
-      box-shadow: 0 3px 12px #00000012;
+      color: #666;
+      margin-bottom: 25px;
     }
-    .product img {
-      width: 100%;
-      max-width: 300px;
-      height: 220px;
-      object-fit: contain;
+
+    .section-title {
+      margin-top: 25px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #16834a;
+      font-size: 18px;
     }
-    form {
-      background: white;
-      margin-top: 22px;
-      padding: 22px;
-      border-radius: 12px;
+
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
     }
-    label { display: block; margin-top: 14px; }
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font: inherit;
-    }
+
+    input,
+    textarea,
+    select,
     button {
       width: 100%;
-      margin-top: 20px;
-      padding: 14px;
-      background: #126b50;
-      color: white;
-      border: 0;
-      border-radius: 6px;
+      padding: 12px;
+      margin-top: 7px;
+      border: 1px solid #ccc;
+      border-radius: 7px;
       font-size: 16px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    input[readonly] {
+      background: #f0f0f0;
+      color: #555;
+    }
+
+    .total-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #eaf7ef;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 22px;
+      border: none;
+      background: #16834a;
+      color: white;
+      font-weight: bold;
       cursor: pointer;
     }
-    footer { text-align: center; padding: 20px; }
+
+    button:hover {
+      background: #116638;
+    }
+
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+
+    #message {
+      margin-top: 18px;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .note {
+      margin-top: 20px;
+      color: #666;
+      font-size: 13px;
+      line-height: 1.6;
+    }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>IK SHOP</h1>
-    <p>BIRANI RISE, ORDER NOW </p>
-  </header>
+  <main class="container">
 
-  <main>
-    <section class="product">
-      <img
-        src="https://placehold.co/300x220?text=Your+Product"
-        alt="https://www.amazon.in/Daawat-Biryani-Basmati-Rice-1kg/dp/B00NXPAG2Q"
-      >
-      <h2>আমার পণ্য</h2>
-      <p>PRISE: ₹500</p>
-      <p>অর্ডার করতে নিচের ফর্মটি পূরণ করুন।</p>
-    </section>
+    <h1 class="shop-title">My Online Shop</h1>
+    <p class="subtitle">Complete the form below to place your order.</p>
 
-    <form id="orderForm">
-      <h2>অর্ডার ফর্ম</h2>
+    <form
+      id="orderForm"
+      action="YOUR_WEB_APP_URL"
+      method="POST"
+      target="orderFrame">
 
-      <label for="name">আপনার নাম</label>
-      <input id="name" name="name" required>
+      <h2 class="section-title">Customer Information</h2>
 
-      <label for="phone">মোবাইল নম্বর</label>
-      <input id="phone" name="phone"
-        type="tel" required>
+      <label for="name">Customer Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        autocomplete="name"
+        required>
 
-      <label for="address">সম্পূর্ণ ঠিকানা</label>
-      <textarea id="address" name="address"
-        rows="3" required></textarea>
+      <label for="phone">Phone Number</label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        autocomplete="tel"
+        required>
 
-      <label for="quantity">পণ্যের পরিমাণ</label>
-      <input id="quantity" name="quantity"
-        type="number" min="1" value="1" required>
+      <label for="address">Delivery Address</label>
+      <textarea
+        id="address"
+        name="address"
+        autocomplete="street-address"
+        required></textarea>
 
-      <button type="submit">অর্ডার করুন</button>
-      <p id="message" aria-live="polite"></p>
+      <h2 class="section-title">Order Information</h2>
+
+      <label for="product">Product Name</label>
+      <input
+        type="text"
+        id="product"
+        name="product"
+        required>
+
+      <label for="quantity">Quantity</label>
+      <input
+        type="number"
+        id="quantity"
+        name="quantity"
+        min="1"
+        max="100"
+        value="1"
+        required>
+
+      <label for="unitPrice">Unit Price (INR ₹)</label>
+      <input
+        type="number"
+        id="unitPrice"
+        name="unitPrice"
+        min="0.01"
+        step="0.01"
+        required>
+
+      <div class="total-box">
+        Total Price: ₹<span id="totalPrice">0.00</span>
+      </div>
+
+      <h2 class="section-title">Order Tracking Information</h2>
+
+      <label for="orderId">Order ID</label>
+      <input
+        type="text"
+        id="orderId"
+        value="Generated automatically when the order is saved"
+        readonly>
+
+      <label for="orderDate">Order Date</label>
+      <input
+        type="text"
+        id="orderDate"
+        value="Recorded automatically when the order is saved"
+        readonly>
+
+      <label for="paymentStatus">Payment Status</label>
+      <input
+        type="text"
+        id="paymentStatus"
+        value="Pending"
+        readonly>
+
+      <label for="deliveryStatus">Delivery Status</label>
+      <input
+        type="text"
+        id="deliveryStatus"
+        value="Processing"
+        readonly>
+
+      <button type="submit" id="submitButton">
+        Place Order
+      </button>
+
+      <p id="message" aria-live="polite">
+        Please check your information before submitting.
+      </p>
+
     </form>
+
+    <iframe
+      name="orderFrame"
+      id="orderFrame"
+      title="Order submission response"
+      hidden></iframe>
+
+    <p class="note">
+      Your order details will be saved in our order system.
+      Order ID, order date, payment status, and delivery status
+      are recorded automatically by the server.
+    </p>
+
   </main>
 
-  <footer>
-    © 2026 IK SHOP
-  </footer>
-
   <script>
-    document.getElementById("orderForm")
-      .addEventListener("submit", function(event) {
-        event.preventDefault();
-        document.getElementById("message").textContent =
-          "ফর্মটি তৈরি হয়েছে। অর্ডার পাঠানোর ব্যবস্থা এখনও যুক্ত করা হয়নি।";
-      });
+    const form = document.getElementById("orderForm");
+    const quantityInput = document.getElementById("quantity");
+    const priceInput = document.getElementById("unitPrice");
+    const totalPrice = document.getElementById("totalPrice");
+    const message = document.getElementById("message");
+    const submitButton = document.getElementById("submitButton");
+
+    function updateTotal() {
+      const quantity = Number(quantityInput.value);
+      const price = Number(priceInput.value);
+
+      const total =
+        Number.isFinite(quantity) &&
+        Number.isFinite(price) &&
+        quantity > 0 &&
+        price > 0
+          ? quantity * price
+          : 0;
+
+      totalPrice.textContent = total.toFixed(2);
+    }
+
+    quantityInput.addEventListener("input", updateTotal);
+    priceInput.addEventListener("input", updateTotal);
+
+    form.addEventListener("submit", function () {
+      message.textContent = "Submitting your order. Please wait...";
+      submitButton.disabled = true;
+
+      setTimeout(function () {
+        submitButton.disabled = false;
+      }, 5000);
+    });
   </script>
+
 </body>
 </html>
+```
