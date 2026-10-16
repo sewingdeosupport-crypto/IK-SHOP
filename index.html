@@ -82,17 +82,6 @@
       border-radius: 8px;
     }
 
-    .image-fallback {
-      height: 190px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #f0f0f0;
-      color: #666;
-      border-radius: 8px;
-      padding: 10px;
-    }
-
     .product-card h3 {
       margin: 12px 0 4px;
     }
@@ -229,8 +218,7 @@
         grid-template-columns: 1fr;
       }
 
-      .product-image,
-      .image-fallback {
+      .product-image {
         height: 220px;
       }
 
@@ -259,18 +247,14 @@
       <p>Choose your product and place your order below.</p>
     </section>
 
+    <!-- Product section (Cleaned up, removed image-not-found error text) -->
     <section class="products" aria-label="Available products">
 
       <article class="product-card">
         <img
           class="product-image"
           src="./lal-mariz.jpg"
-          alt="Lal mariz"
-          onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
-
-        <div class="image-fallback" hidden>
-          Lal mariz image not found. Check the image file path.
-        </div>
+          alt="Lal mariz">
 
         <h3>Lal mariz</h3>
         <p class="price">₹99</p>
@@ -286,12 +270,7 @@
         <img
           class="product-image"
           src="./sewing-oil.png"
-          alt="Sewing oil"
-          onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
-
-        <div class="image-fallback" hidden>
-          Sewing oil image not found. Check the image file path.
-        </div>
+          alt="Sewing oil">
 
         <h3>Sewing oil</h3>
         <p class="price">₹199</p>
@@ -308,9 +287,10 @@
     <section class="form-card">
       <h2 class="section-title">Customer Information</h2>
 
+      <!-- Updated with your new Google Apps Script URL -->
       <form
         id="orderForm"
-        action="https://script.google.com/macros/s/AKfycbwEI-zprMWHKsmQJ9xgjWmN5qdER3G372-3sTEFe7xFeh62un3_YN9sCX2Cvoqvyuw__Q/exec"
+        action="https://script.google.com/macros/s/AKfycbzA8I-qWQ_GCj57EHddmBnr0N8TjkTZIkv_AaSiQxLCUhmtBNOz4hpLUibBRctWwzLcRQ/exec"
         method="POST"
         target="orderFrame">
 
@@ -369,7 +349,7 @@
           readonly
           required>
 
-        <!-- Hidden input for Total Price to send to Google Sheet -->
+        <!-- Hidden input for Total Price to ensure it passes to Google Sheet -->
         <input
           type="hidden"
           id="totalPriceInput"
@@ -450,7 +430,7 @@
       const total = validQuantity ? quantity * price : 0;
 
       totalPrice.textContent = total.toFixed(2);
-      totalPriceInput.value = total.toFixed(2); // Set hidden input value
+      totalPriceInput.value = total.toFixed(2); // Updates hidden input value
     }
 
     document.querySelectorAll(".select-product").forEach(button => {
