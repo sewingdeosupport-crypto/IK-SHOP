@@ -369,6 +369,13 @@
           readonly
           required>
 
+        <!-- Hidden input for Total Price to send to Google Sheet -->
+        <input
+          type="hidden"
+          id="totalPriceInput"
+          name="totalPrice"
+          value="0.00">
+
         <div class="total-box">
           Total Price: ₹<span id="totalPrice">0.00</span>
         </div>
@@ -417,6 +424,7 @@
     const quantityInput = document.getElementById("quantity");
     const priceInput = document.getElementById("unitPrice");
     const totalPrice = document.getElementById("totalPrice");
+    const totalPriceInput = document.getElementById("totalPriceInput");
     const message = document.getElementById("message");
     const submitButton = document.getElementById("submitButton");
     const orderFrame = document.getElementById("orderFrame");
@@ -442,6 +450,7 @@
       const total = validQuantity ? quantity * price : 0;
 
       totalPrice.textContent = total.toFixed(2);
+      totalPriceInput.value = total.toFixed(2); // Set hidden input value
     }
 
     document.querySelectorAll(".select-product").forEach(button => {
