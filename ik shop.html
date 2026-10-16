@@ -1,285 +1,524 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>IK Shop</title>
+  <title>IK Shop | Online Store</title>
+  <meta name="description" content="Shop quality products at great prices with IK Shop.">
 
   <style>
     * {
       box-sizing: border-box;
     }
 
+    :root {
+      --green: #16834a;
+      --dark-green: #116638;
+      --light-green: #eaf7ef;
+      --background: #f3f6f4;
+      --text: #222;
+      --muted: #666;
+    }
+
     body {
       margin: 0;
-      padding: 25px 15px;
       font-family: Arial, sans-serif;
-      background: #f3f6f4;
-      color: #222;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      background: var(--green);
+      color: white;
+      padding: 22px 16px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    header p {
+      margin: 6px 0 0;
     }
 
     .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 25px;
-      background: #ffffff;
+      width: min(100% - 30px, 850px);
+      margin: 25px auto;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .intro h2 {
+      margin-bottom: 5px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
+      text-align: center;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 190px;
+      object-fit: contain;
+      background: #f7f7f7;
+      border-radius: 8px;
+    }
+
+    .image-fallback {
+      height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f0f0f0;
+      color: #666;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .product-card h3 {
+      margin: 12px 0 4px;
+    }
+
+    .price {
+      color: var(--green);
+      font-size: 21px;
+      font-weight: bold;
+      margin: 5px 0 12px;
+    }
+
+    .select-product {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 7px;
+      color: white;
+      background: var(--green);
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .select-product:hover {
+      background: var(--dark-green);
+    }
+
+    .form-card {
+      background: white;
+      padding: 24px;
       border-radius: 14px;
       box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
     }
 
-    .shop-title {
-      text-align: center;
-      color: #16834a;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 25px;
-    }
-
     .section-title {
-      margin-top: 25px;
+      margin: 25px 0 15px;
       padding-bottom: 8px;
-      border-bottom: 2px solid #16834a;
-      font-size: 18px;
+      border-bottom: 2px solid var(--green);
+      font-size: 19px;
+    }
+
+    .section-title:first-child {
+      margin-top: 0;
     }
 
     label {
       display: block;
-      margin-top: 16px;
+      margin-top: 15px;
       font-weight: bold;
     }
 
     input,
     textarea,
-    select,
-    button {
+    select {
+      display: block;
       width: 100%;
-      padding: 12px;
       margin-top: 7px;
+      padding: 12px;
       border: 1px solid #ccc;
       border-radius: 7px;
       font-size: 16px;
+      font-family: inherit;
+      background: white;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: 2px solid #a5d6b8;
+      border-color: var(--green);
     }
 
     textarea {
-      min-height: 90px;
+      min-height: 95px;
       resize: vertical;
     }
 
     input[readonly] {
       background: #f0f0f0;
-      color: #555;
     }
 
     .total-box {
       margin-top: 20px;
-      padding: 15px;
-      background: #eaf7ef;
+      padding: 16px;
       border-radius: 8px;
-      font-size: 18px;
-      font-weight: bold;
+      background: var(--light-green);
       text-align: center;
+      font-size: 21px;
+      font-weight: bold;
     }
 
-    button {
+    .submit-button {
+      width: 100%;
       margin-top: 22px;
+      padding: 14px;
       border: none;
-      background: #16834a;
+      border-radius: 8px;
+      background: var(--green);
       color: white;
+      font-size: 17px;
       font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #116638;
+    .submit-button:hover {
+      background: var(--dark-green);
     }
 
-    button:disabled {
-      background: #999;
+    .submit-button:disabled {
+      background: #888;
       cursor: not-allowed;
     }
 
     #message {
-      margin-top: 18px;
+      margin-top: 16px;
       text-align: center;
       overflow-wrap: anywhere;
     }
 
     .note {
-      margin-top: 20px;
-      color: #666;
+      color: var(--muted);
       font-size: 13px;
-      line-height: 1.6;
+      margin-top: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 520px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+
+      .product-image,
+      .image-fallback {
+        height: 220px;
+      }
+
+      .form-card {
+        padding: 18px;
+      }
+
+      header h1 {
+        font-size: 28px;
+      }
     }
   </style>
 </head>
 
 <body>
+
+  <header>
+    <h1>IK Shop</h1>
+    <p>Quality Products at Great Prices</p>
+  </header>
+
   <main class="container">
 
-    <h1 class="shop-title">My Online Shop</h1>
-    <p class="subtitle">Complete the form below to place your order.</p>
+    <section class="intro">
+      <h2>Our Products</h2>
+      <p>Choose your product and place your order below.</p>
+    </section>
 
-    <form
-      id="orderForm"
-      action="https://script.google.com/macros/s/AKfycbwEI-zprMWHKsmQJ9xgjWmN5qdER3G372-3sTEFe7xFeh62un3_YN9sCX2Cvoqvyuw__Q/exec"
-      method="POST"
-      target="orderFrame">
+    <section class="products" aria-label="Available products">
 
+      <article class="product-card">
+        <img
+          class="product-image"
+          src="images/lal-mariz.jpg"
+          alt="Lal mariz"
+          onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
+
+        <div class="image-fallback" hidden>
+          Lal mariz image not found. Check the image file path.
+        </div>
+
+        <h3>Lal mariz</h3>
+        <p class="price">₹99</p>
+        <button
+          type="button"
+          class="select-product"
+          data-product="Lal mariz">
+          Select Product
+        </button>
+      </article>
+
+      <article class="product-card">
+        <img
+          class="product-image"
+          src="images/sewing-oil.png"
+          alt="Sewing oil"
+          onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
+
+        <div class="image-fallback" hidden>
+          Sewing oil image not found. Check the image file path.
+        </div>
+
+        <h3>Sewing oil</h3>
+        <p class="price">₹199</p>
+        <button
+          type="button"
+          class="select-product"
+          data-product="Sewing oil">
+          Select Product
+        </button>
+      </article>
+
+    </section>
+
+    <section class="form-card">
       <h2 class="section-title">Customer Information</h2>
 
-      <label for="name">Customer Name</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        autocomplete="name"
-        required>
+      <form
+        id="orderForm"
+        action="https://script.google.com/macros/s/AKfycbwEI-zprMWHKsmQJ9xgjWmN5qdER3G372-3sTEFe7xFeh62un3_YN9sCX2Cvoqvyuw__Q/exec"
+        method="POST"
+        target="orderFrame">
 
-      <label for="phone">Phone Number</label>
-      <input
-        type="tel"
-        id="phone"
-        name="phone"
-        autocomplete="tel"
-        required>
+        <label for="name">Customer Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          autocomplete="name"
+          maxlength="100"
+          required>
 
-      <label for="address">Delivery Address</label>
-      <textarea
-        id="address"
-        name="address"
-        autocomplete="street-address"
-        required></textarea>
+        <label for="phone">Phone Number</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          autocomplete="tel"
+          maxlength="20"
+          required>
 
-      <h2 class="section-title">Order Information</h2>
+        <label for="address">Delivery Address</label>
+        <textarea
+          id="address"
+          name="address"
+          autocomplete="street-address"
+          maxlength="1000"
+          required></textarea>
 
-      <label for="product">Product Name</label>
-      <input
-        type="text"
-        id="product"
-        name="product"
-        required>
+        <h2 class="section-title">Order Information</h2>
 
-      <label for="quantity">Quantity</label>
-      <input
-        type="number"
-        id="quantity"
-        name="quantity"
-        min="1"
-        max="100"
-        value="1"
-        required>
+        <label for="product">Product Name</label>
+        <select id="product" name="product" required>
+          <option value="">-- Select a Product --</option>
+          <option value="Lal mariz">Lal mariz - ₹99</option>
+          <option value="Sewing oil">Sewing oil - ₹199</option>
+        </select>
 
-      <label for="unitPrice">Unit Price (INR ₹)</label>
-      <input
-        type="number"
-        id="unitPrice"
-        name="unitPrice"
-        min="0.01"
-        step="0.01"
-        required>
+        <label for="quantity">Quantity</label>
+        <input
+          type="number"
+          id="quantity"
+          name="quantity"
+          min="1"
+          max="100"
+          step="1"
+          value="1"
+          required>
 
-      <div class="total-box">
-        Total Price: ₹<span id="totalPrice">0.00</span>
-      </div>
+        <label for="unitPrice">Unit Price (INR ₹)</label>
+        <input
+          type="number"
+          id="unitPrice"
+          name="unitPrice"
+          value=""
+          readonly
+          required>
 
-      <h2 class="section-title">Order Tracking Information</h2>
+        <div class="total-box">
+          Total Price: ₹<span id="totalPrice">0.00</span>
+        </div>
 
-      <label for="orderId">Order ID</label>
-      <input
-        type="text"
-        id="orderId"
-        value="Generated automatically when the order is saved"
-        readonly>
+        <button
+          type="submit"
+          class="submit-button"
+          id="submitButton">
+          Place Order
+        </button>
 
-      <label for="orderDate">Order Date</label>
-      <input
-        type="text"
-        id="orderDate"
-        value="Recorded automatically when the order is saved"
-        readonly>
+        <p id="message" aria-live="polite">
+          Please check your details before placing your order.
+        </p>
 
-      <label for="paymentStatus">Payment Status</label>
-      <input
-        type="text"
-        id="paymentStatus"
-        value="Pending"
-        readonly>
+      </form>
 
-      <label for="deliveryStatus">Delivery Status</label>
-      <input
-        type="text"
-        id="deliveryStatus"
-        value="Processing"
-        readonly>
+      <iframe
+        name="orderFrame"
+        id="orderFrame"
+        title="Order submission response"
+        hidden>
+      </iframe>
 
-      <button type="submit" id="submitButton">
-        Place Order
-      </button>
-
-      <p id="message" aria-live="polite">
-        Please check your information before submitting.
+      <p class="note">
+        Order details are sent to our order system.
+        Order confirmation depends on the server successfully saving
+        your order.
       </p>
-
-    </form>
-
-    <iframe
-      name="orderFrame"
-      id="orderFrame"
-      title="Order submission response"
-      hidden></iframe>
-
-    <p class="note">
-      Your order details will be saved in our order system.
-      Order ID, order date, payment status, and delivery status
-      are recorded automatically by the server.
-    </p>
+    </section>
 
   </main>
 
+  <footer>
+    &copy; <span id="year"></span> IK Shop. All rights reserved.
+  </footer>
+
   <script>
+    const productPrices = {
+      "Lal mariz": 99,
+      "Sewing oil": 199
+    };
+
     const form = document.getElementById("orderForm");
+    const productInput = document.getElementById("product");
     const quantityInput = document.getElementById("quantity");
     const priceInput = document.getElementById("unitPrice");
     const totalPrice = document.getElementById("totalPrice");
     const message = document.getElementById("message");
     const submitButton = document.getElementById("submitButton");
+    const orderFrame = document.getElementById("orderFrame");
+
+    let submissionInProgress = false;
+    let submissionTimer;
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
 
     function updateTotal() {
+      const product = productInput.value;
       const quantity = Number(quantityInput.value);
-      const price = Number(priceInput.value);
+      const price = productPrices[product] || 0;
 
-      const total =
-        Number.isFinite(quantity) &&
-        Number.isFinite(price) &&
-        quantity > 0 &&
-        price > 0
-          ? quantity * price
-          : 0;
+      priceInput.value = price ? price.toFixed(2) : "";
+
+      const validQuantity =
+        Number.isInteger(quantity) &&
+        quantity >= 1 &&
+        quantity <= 100;
+
+      const total = validQuantity ? quantity * price : 0;
 
       totalPrice.textContent = total.toFixed(2);
     }
 
-    quantityInput.addEventListener("input", updateTotal);
-    priceInput.addEventListener("input", updateTotal);
+    document.querySelectorAll(".select-product").forEach(button => {
+      button.addEventListener("click", () => {
+        productInput.value = button.dataset.product;
+        updateTotal();
 
-    form.addEventListener("submit", function () {
-      message.textContent = "Submitting your order. Please wait...";
-      submitButton.disabled = true;
-
-      setTimeout(function () {
-        submitButton.disabled = false;
-      }, 5000);
+        document.querySelector(".form-card").scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      });
     });
-  </script>
-<img src="images/lal-mariz.jpg" alt="Lal mariz">
 
-<img src="images/sewing-oil.png" alt="Sewing oil">
+    productInput.addEventListener("change", updateTotal);
+    quantityInput.addEventListener("input", updateTotal);
+
+    form.addEventListener("submit", event => {
+      updateTotal();
+
+      const product = productInput.value;
+      const quantity = Number(quantityInput.value);
+
+      if (!productPrices[product]) {
+        event.preventDefault();
+        message.textContent = "Please select a valid product.";
+        return;
+      }
+
+      if (
+        !Number.isInteger(quantity) ||
+        quantity < 1 ||
+        quantity > 100
+      ) {
+        event.preventDefault();
+        message.textContent = "Please enter a quantity from 1 to 100.";
+        return;
+      }
+
+      if (submissionInProgress) {
+        event.preventDefault();
+        return;
+      }
+
+      submissionInProgress = true;
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting...";
+      message.textContent =
+        "Your order is being submitted. Please wait.";
+
+      clearTimeout(submissionTimer);
+
+      submissionTimer = setTimeout(() => {
+        submissionInProgress = false;
+        submitButton.disabled = false;
+        submitButton.textContent = "Place Order";
+
+        message.textContent =
+          "We could not confirm the result here. Please check your Google Sheet before submitting again.";
+      }, 15000);
+    });
+
+    orderFrame.addEventListener("load", () => {
+      if (!submissionInProgress) return;
+
+      clearTimeout(submissionTimer);
+      submissionInProgress = false;
+      submitButton.disabled = false;
+      submitButton.textContent = "Place Order";
+
+      message.textContent =
+        "The form was sent. Please check your Google Sheet to confirm whether the order was saved.";
+    });
+
+    updateTotal();
+  </script>
 
 </body>
 </html>
-```
