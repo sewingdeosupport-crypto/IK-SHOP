@@ -247,7 +247,6 @@
       <p>Choose your product and place your order below.</p>
     </section>
 
-    <!-- Product section (Cleaned up, removed image-not-found error text) -->
     <section class="products" aria-label="Available products">
 
       <article class="product-card">
@@ -287,12 +286,7 @@
     <section class="form-card">
       <h2 class="section-title">Customer Information</h2>
 
-      <!-- Updated with your new Google Apps Script URL -->
-      <form
-        id="orderForm"
-        action="https://script.google.com/macros/s/AKfycbzA8I-qWQ_GCj57EHddmBnr0N8TjkTZIkv_AaSiQxLCUhmtBNOz4hpLUibBRctWwzLcRQ/exec"
-        method="POST"
-        target="orderFrame">
+      <form id="orderForm">
 
         <label for="name">Customer Name</label>
         <input
@@ -349,7 +343,6 @@
           readonly
           required>
 
-        <!-- Hidden input for Total Price to ensure it passes to Google Sheet -->
         <input
           type="hidden"
           id="totalPriceInput"
@@ -373,13 +366,6 @@
 
       </form>
 
-      <iframe
-        name="orderFrame"
-        id="orderFrame"
-        title="Order submission response"
-        hidden>
-      </iframe>
-
       <p class="note">
         Order details are sent to our order system.
         Order confirmation depends on the server successfully saving
@@ -394,6 +380,9 @@
   </footer>
 
   <script>
+    // Updated Google Apps Script Web App URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx1Yx6_CkaweIGRuCBaAmid85NP1psMrywr_Nvsp4z7QRH7VEr9ABh_6W4uUr8m3o9rTQ/exec";
+
     const productPrices = {
       "Lal mariz": 99,
       "Sewing oil": 199
@@ -407,10 +396,6 @@
     const totalPriceInput = document.getElementById("totalPriceInput");
     const message = document.getElementById("message");
     const submitButton = document.getElementById("submitButton");
-    const orderFrame = document.getElementById("orderFrame");
-
-    let submissionInProgress = false;
-    let submissionTimer;
 
     document.getElementById("year").textContent =
       new Date().getFullYear();
@@ -430,7 +415,7 @@
       const total = validQuantity ? quantity * price : 0;
 
       totalPrice.textContent = total.toFixed(2);
-      totalPriceInput.value = total.toFixed(2); // Updates hidden input value
+      totalPriceInput.value = total.toFixed(2);
     }
 
     document.querySelectorAll(".select-product").forEach(button => {
@@ -448,14 +433,14 @@
     productInput.addEventListener("change", updateTotal);
     quantityInput.addEventListener("input", updateTotal);
 
-    form.addEventListener("submit", event => {
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
       updateTotal();
 
       const product = productInput.value;
       const quantity = Number(quantityInput.value);
 
       if (!productPrices[product]) {
-        event.preventDefault();
         message.textContent = "Please select a valid product.";
         return;
       }
@@ -465,44 +450,32 @@
         quantity < 1 ||
         quantity > 100
       ) {
-        event.preventDefault();
         message.textContent = "Please enter a quantity from 1 to 100.";
         return;
       }
 
-      if (submissionInProgress) {
-        event.preventDefault();
-        return;
-      }
-
-      submissionInProgress = true;
       submitButton.disabled = true;
       submitButton.textContent = "Submitting...";
-      message.textContent =
-        "Your order is being submitted. Please wait.";
+      message.textContent = "Your order is being submitted. Please wait.";
 
-      clearTimeout(submissionTimer);
+      try {
+        const formData = new FormData(form);
+        
+        await fetch(SCRIPT_URL, {
+          method: "POST",
+          body: formData,
+          mode: "no-cors"
+        });
 
-      submissionTimer = setTimeout(() => {
-        submissionInProgress = false;
+        message.textContent = "Order placed successfully! Please check your Google Sheet.";
+        form.reset();
+        updateTotal();
+      } catch (error) {
+        message.textContent = "Submission failed. Please check your internet connection and try again.";
+      } finally {
         submitButton.disabled = false;
         submitButton.textContent = "Place Order";
-
-        message.textContent =
-          "We could not confirm the result here. Please check your Google Sheet before submitting again.";
-      }, 15000);
-    });
-
-    orderFrame.addEventListener("load", () => {
-      if (!submissionInProgress) return;
-
-      clearTimeout(submissionTimer);
-      submissionInProgress = false;
-      submitButton.disabled = false;
-      submitButton.textContent = "Place Order";
-
-      message.textContent =
-        "The form was sent. Please check your Google Sheet to confirm whether the order was saved.";
+      }
     });
 
     updateTotal();
