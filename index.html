@@ -248,8 +248,8 @@
     <!-- Categories Section -->
     <div class="categories">
       <button type="button" class="cat-btn active" data-category="all">All Products</button>
-      <button type="button" class="cat-btn" data-category="sewing">সেলাই মেশিন অল পার্টস</button>
-      <button type="button" class="cat-btn" data-category="spices">মসলার ভ্যারাইটি</button>
+      <button type="button" class="cat-btn" data-category="sewing">Sewing Machine Parts</button>
+      <button type="button" class="cat-btn" data-category="spices">Spice Variety</button>
     </div>
 
     <section class="products" aria-label="Available products">
@@ -357,7 +357,7 @@
 
   <script>
     const SCRIPT_URL =
-      "https://script.google.com/macros/s/AKfycbwDIb_2UnxoZtK87FRTTVWHimMQgUeq9bo21iyAbjvRb6k5rgo-LMFfvbZbGJlSSnn14A/exec";
+      "https://script.google.com/macros/s/AKfycbwf9kNdVVRe7TfAmQtS4KmShYVo1ufVk5EFnuv41OaH_kzVytpBcwmtyrGv-KvWFPdl/exec";
 
     const productPrices = {
       "Lal mariz": 99,
@@ -376,7 +376,7 @@
     document.getElementById("year").textContent =
       new Date().getFullYear();
 
-    // Category Filtering Script
+    // Category Filtering Logic
     const catButtons = document.querySelectorAll(".cat-btn");
     const productCards = document.querySelectorAll(".product-card");
 
