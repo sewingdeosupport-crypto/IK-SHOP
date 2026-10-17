@@ -1,16 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>IK Shop | Online Store</title>
   <meta name="description" content="Shop quality products at great prices with IK Shop.">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     :root {
       --green: #16834a;
@@ -36,14 +34,8 @@
       text-align: center;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 32px;
-    }
-
-    header p {
-      margin: 6px 0 0;
-    }
+    header h1 { margin: 0; font-size: 32px; }
+    header p { margin: 6px 0 0; }
 
     .container {
       width: min(100% - 30px, 850px);
@@ -55,9 +47,7 @@
       margin-bottom: 25px;
     }
 
-    .intro h2 {
-      margin-bottom: 5px;
-    }
+    .intro h2 { margin-bottom: 5px; }
 
     .products {
       display: grid;
@@ -82,9 +72,7 @@
       border-radius: 8px;
     }
 
-    .product-card h3 {
-      margin: 12px 0 4px;
-    }
+    .product-card h3 { margin: 12px 0 4px; }
 
     .price {
       color: var(--green);
@@ -93,21 +81,25 @@
       margin: 5px 0 12px;
     }
 
-    .select-product {
+    .select-product,
+    .submit-button {
       width: 100%;
-      padding: 11px;
       border: none;
-      border-radius: 7px;
-      color: white;
+      border-radius: 8px;
       background: var(--green);
-      font-size: 15px;
+      color: white;
       font-weight: bold;
       cursor: pointer;
     }
 
-    .select-product:hover {
-      background: var(--dark-green);
+    .select-product {
+      padding: 11px;
+      font-size: 15px;
+      border-radius: 7px;
     }
+
+    .select-product:hover,
+    .submit-button:hover { background: var(--dark-green); }
 
     .form-card {
       background: white;
@@ -123,9 +115,7 @@
       font-size: 19px;
     }
 
-    .section-title:first-child {
-      margin-top: 0;
-    }
+    .section-title:first-child { margin-top: 0; }
 
     label {
       display: block;
@@ -133,9 +123,7 @@
       font-weight: bold;
     }
 
-    input,
-    textarea,
-    select {
+    input, textarea, select {
       display: block;
       width: 100%;
       margin-top: 7px;
@@ -147,9 +135,7 @@
       background: white;
     }
 
-    input:focus,
-    textarea:focus,
-    select:focus {
+    input:focus, textarea:focus, select:focus {
       outline: 2px solid #a5d6b8;
       border-color: var(--green);
     }
@@ -159,9 +145,7 @@
       resize: vertical;
     }
 
-    input[readonly] {
-      background: #f0f0f0;
-    }
+    input[readonly] { background: #f0f0f0; }
 
     .total-box {
       margin-top: 20px;
@@ -174,20 +158,9 @@
     }
 
     .submit-button {
-      width: 100%;
       margin-top: 22px;
       padding: 14px;
-      border: none;
-      border-radius: 8px;
-      background: var(--green);
-      color: white;
       font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .submit-button:hover {
-      background: var(--dark-green);
     }
 
     .submit-button:disabled {
@@ -214,105 +187,74 @@
     }
 
     @media (max-width: 520px) {
-      .products {
-        grid-template-columns: 1fr;
-      }
-
-      .product-image {
-        height: 220px;
-      }
-
-      .form-card {
-        padding: 18px;
-      }
-
-      header h1 {
-        font-size: 28px;
-      }
+      .products { grid-template-columns: 1fr; }
+      .product-image { height: 220px; }
+      .form-card { padding: 18px; }
+      header h1 { font-size: 28px; }
     }
   </style>
 </head>
 
 <body>
-
   <header>
     <h1>IK Shop</h1>
     <p>Quality Products at Great Prices</p>
   </header>
 
   <main class="container">
-
     <section class="intro">
       <h2>Our Products</h2>
       <p>Choose your product and place your order below.</p>
     </section>
 
     <section class="products" aria-label="Available products">
-
       <article class="product-card">
-        <img
-          class="product-image"
-          src="./lal-mariz.jpg"
-          alt="Lal mariz">
+        <img class="product-image"
+             src="./lal-mariz.jpg"
+             alt="Lal mariz"
+             onerror="this.style.display='none'">
 
         <h3>Lal mariz</h3>
         <p class="price">₹99</p>
-        <button
-          type="button"
-          class="select-product"
-          data-product="Lal mariz">
+        <button type="button"
+                class="select-product"
+                data-product="Lal mariz">
           Select Product
         </button>
       </article>
 
       <article class="product-card">
-        <img
-          class="product-image"
-          src="./sewing-oil.png"
-          alt="Sewing oil">
+        <img class="product-image"
+             src="./sewing-oil.png"
+             alt="Sewing oil"
+             onerror="this.style.display='none'">
 
         <h3>Sewing oil</h3>
         <p class="price">₹199</p>
-        <button
-          type="button"
-          class="select-product"
-          data-product="Sewing oil">
+        <button type="button"
+                class="select-product"
+                data-product="Sewing oil">
           Select Product
         </button>
       </article>
-
     </section>
 
     <section class="form-card">
       <h2 class="section-title">Customer Information</h2>
 
       <form id="orderForm">
-
         <label for="name">Customer Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          autocomplete="name"
-          maxlength="100"
-          required>
+        <input type="text" id="name" name="name"
+               autocomplete="name" maxlength="100" required>
 
         <label for="phone">Phone Number</label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          autocomplete="tel"
-          maxlength="20"
-          required>
+        <input type="tel" id="phone" name="phone"
+               autocomplete="tel" maxlength="20" required>
 
         <label for="address">Delivery Address</label>
-        <textarea
-          id="address"
-          name="address"
-          autocomplete="street-address"
-          maxlength="1000"
-          required></textarea>
+        <textarea id="address" name="address"
+                  autocomplete="street-address"
+                  maxlength="1000" required></textarea>
 
         <h2 class="section-title">Order Information</h2>
 
@@ -324,55 +266,35 @@
         </select>
 
         <label for="quantity">Quantity</label>
-        <input
-          type="number"
-          id="quantity"
-          name="quantity"
-          min="1"
-          max="100"
-          step="1"
-          value="1"
-          required>
+        <input type="number" id="quantity" name="quantity"
+               min="1" max="100" step="1" value="1" required>
 
         <label for="unitPrice">Unit Price (INR ₹)</label>
-        <input
-          type="number"
-          id="unitPrice"
-          name="unitPrice"
-          value=""
-          readonly
-          required>
+        <input type="number" id="unitPrice" name="unitPrice"
+               value="" readonly required>
 
-        <input
-          type="hidden"
-          id="totalPriceInput"
-          name="totalPrice"
-          value="0.00">
+        <input type="hidden" id="totalPriceInput"
+               name="totalPrice" value="0.00">
 
         <div class="total-box">
           Total Price: ₹<span id="totalPrice">0.00</span>
         </div>
 
-        <button
-          type="submit"
-          class="submit-button"
-          id="submitButton">
+        <button type="submit" class="submit-button" id="submitButton">
           Place Order
         </button>
 
         <p id="message" aria-live="polite">
           Please check your details before placing your order.
         </p>
-
       </form>
 
       <p class="note">
-        Order details are sent to our order system.
-        Order confirmation depends on the server successfully saving
-        your order.
+        After placing an order, WhatsApp will open with the order details.
+        You must press Send in WhatsApp. Check your Google Sheet to confirm
+        that the order was saved.
       </p>
     </section>
-
   </main>
 
   <footer>
@@ -380,7 +302,12 @@
   </footer>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVb7XMwD3TVT5xJwmCyfuXA08jJPbDizRj2hiZjX8_lXHRvBJUxN-Y2pzkSOdzB22q8g/exec";
+    // Your deployed Google Apps Script URL
+    const SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbzVb7XMwD3TVT5xJwmCyfuXA08jJPbDizRj2hiZjX8_lXHRvBJUxN-Y2pzkSOdzB22q8g/exec";
+
+    // Your WhatsApp number, including country code, without + or spaces
+    const WHATSAPP_NUMBER = "917031997082";
 
     const productPrices = {
       "Lal mariz": 99,
@@ -432,6 +359,22 @@
     productInput.addEventListener("change", updateTotal);
     quantityInput.addEventListener("input", updateTotal);
 
+    function makeWhatsAppUrl(order) {
+      const text =
+        "🛍️ IK Shop - New Order\n\n" +
+        "👤 Customer: " + order.name + "\n" +
+        "📞 Phone: " + order.phone + "\n" +
+        "📍 Address: " + order.address + "\n\n" +
+        "📦 Product: " + order.product + "\n" +
+        "🔢 Quantity: " + order.quantity + "\n" +
+        "💰 Unit Price: ₹" + order.unitPrice + "\n" +
+        "💵 Total Price: ₹" + order.totalPrice + "\n\n" +
+        "Please confirm this order.";
+
+      return "https://wa.me/" + WHATSAPP_NUMBER +
+        "?text=" + encodeURIComponent(text);
+    }
+
     form.addEventListener("submit", async event => {
       event.preventDefault();
       updateTotal();
@@ -444,33 +387,66 @@
         return;
       }
 
-      if (
-        !Number.isInteger(quantity) ||
-        quantity < 1 ||
-        quantity > 100
-      ) {
-        message.textContent = "Please enter a quantity from 1 to 100.";
+      if (!Number.isInteger(quantity) ||
+          quantity < 1 || quantity > 100) {
+        message.textContent =
+          "Please enter a quantity from 1 to 100.";
+        return;
+      }
+
+      const order = {
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        product: product,
+        quantity: quantity,
+        unitPrice: productPrices[product],
+        totalPrice: productPrices[product] * quantity
+      };
+
+      if (!order.name || !order.phone || !order.address) {
+        message.textContent =
+          "Please fill in your name, phone number and address.";
         return;
       }
 
       submitButton.disabled = true;
       submitButton.textContent = "Submitting...";
-      message.textContent = "Your order is being submitted. Please wait.";
+      message.textContent =
+        "Submitting your order. Please press Send in WhatsApp.";
+
+      // Open WhatsApp with the order details prefilled.
+      // The user must manually press Send.
+      const whatsappTab = window.open(
+        makeWhatsAppUrl(order),
+        "_blank"
+      );
 
       try {
         const formData = new FormData(form);
-        
+
         await fetch(SCRIPT_URL, {
           method: "POST",
           body: formData,
           mode: "no-cors"
         });
 
-        message.textContent = "Order placed successfully! Please check your Google Sheet.";
+        message.textContent =
+          "Order request sent. Please press Send in WhatsApp. " +
+          "Check your Google Sheet to confirm the order was saved.";
+
         form.reset();
         updateTotal();
       } catch (error) {
-        message.textContent = "Submission failed. Please check your internet connection and try again.";
+        message.textContent =
+          "The order request could not be confirmed. Please check " +
+          "your internet connection and Google Sheet.";
+
+        if (!whatsappTab) {
+          message.textContent +=
+            " Your browser may have blocked the WhatsApp popup. " +
+            "Allow popups and try again.";
+        }
       } finally {
         submitButton.disabled = false;
         submitButton.textContent = "Place Order";
@@ -479,6 +455,5 @@
 
     updateTotal();
   </script>
-
 </body>
 </html>
