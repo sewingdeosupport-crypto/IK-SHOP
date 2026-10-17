@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>IK Shop | Online Store</title>
   <meta name="description" content="Shop quality products at great prices with IK Shop.">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     :root {
       --green: #16834a;
@@ -36,14 +33,8 @@
       text-align: center;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 32px;
-    }
-
-    header p {
-      margin: 6px 0 0;
-    }
+    header h1 { margin: 0; font-size: 32px; }
+    header p { margin: 6px 0 0; }
 
     .container {
       width: min(100% - 30px, 850px);
@@ -52,11 +43,32 @@
 
     .intro {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
-    .intro h2 {
-      margin-bottom: 5px;
+    /* Category Filter Buttons */
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      padding: 8px 16px;
+      border: 2px solid var(--green);
+      background: white;
+      color: var(--green);
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .cat-btn.active, .cat-btn:hover {
+      background: var(--green);
+      color: white;
     }
 
     .products {
@@ -82,9 +94,7 @@
       border-radius: 8px;
     }
 
-    .product-card h3 {
-      margin: 12px 0 4px;
-    }
+    .product-card h3 { margin: 12px 0 4px; }
 
     .price {
       color: var(--green);
@@ -93,21 +103,25 @@
       margin: 5px 0 12px;
     }
 
-    .select-product {
+    .select-product,
+    .submit-button {
       width: 100%;
-      padding: 11px;
       border: none;
-      border-radius: 7px;
-      color: white;
+      border-radius: 8px;
       background: var(--green);
-      font-size: 15px;
+      color: white;
       font-weight: bold;
       cursor: pointer;
     }
 
-    .select-product:hover {
-      background: var(--dark-green);
+    .select-product {
+      padding: 11px;
+      font-size: 15px;
+      border-radius: 7px;
     }
+
+    .select-product:hover,
+    .submit-button:hover { background: var(--dark-green); }
 
     .form-card {
       background: white;
@@ -123,9 +137,7 @@
       font-size: 19px;
     }
 
-    .section-title:first-child {
-      margin-top: 0;
-    }
+    .section-title:first-child { margin-top: 0; }
 
     label {
       display: block;
@@ -133,9 +145,7 @@
       font-weight: bold;
     }
 
-    input,
-    textarea,
-    select {
+    input, textarea, select {
       display: block;
       width: 100%;
       margin-top: 7px;
@@ -147,9 +157,7 @@
       background: white;
     }
 
-    input:focus,
-    textarea:focus,
-    select:focus {
+    input:focus, textarea:focus, select:focus {
       outline: 2px solid #a5d6b8;
       border-color: var(--green);
     }
@@ -159,8 +167,28 @@
       resize: vertical;
     }
 
-    input[readonly] {
-      background: #f0f0f0;
+    input[readonly] { background: #f0f0f0; }
+
+    /* Payment Options Style */
+    .payment-options {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .payment-options label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: normal;
+      cursor: pointer;
+      margin-top: 0;
+    }
+
+    .payment-options input[type="radio"] {
+      width: auto;
+      margin-top: 0;
+      cursor: pointer;
     }
 
     .total-box {
@@ -174,20 +202,9 @@
     }
 
     .submit-button {
-      width: 100%;
       margin-top: 22px;
       padding: 14px;
-      border: none;
-      border-radius: 8px;
-      background: var(--green);
-      color: white;
       font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .submit-button:hover {
-      background: var(--dark-green);
     }
 
     .submit-button:disabled {
@@ -201,12 +218,6 @@
       overflow-wrap: anywhere;
     }
 
-    .note {
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 20px;
-    }
-
     footer {
       text-align: center;
       padding: 20px;
@@ -214,105 +225,83 @@
     }
 
     @media (max-width: 520px) {
-      .products {
-        grid-template-columns: 1fr;
-      }
-
-      .product-image {
-        height: 220px;
-      }
-
-      .form-card {
-        padding: 18px;
-      }
-
-      header h1 {
-        font-size: 28px;
-      }
+      .products { grid-template-columns: 1fr; }
+      .product-image { height: 220px; }
+      .form-card { padding: 18px; }
+      header h1 { font-size: 28px; }
     }
   </style>
 </head>
 
 <body>
-
   <header>
     <h1>IK Shop</h1>
     <p>Quality Products at Great Prices</p>
   </header>
 
   <main class="container">
-
     <section class="intro">
-      <h2>Our Products</h2>
-      <p>Choose your product and place your order below.</p>
+      <h2>Our Categories & Products</h2>
+      <p>Select a category to filter products or place your order below.</p>
     </section>
 
+    <!-- Categories Section -->
+    <div class="categories">
+      <button type="button" class="cat-btn active" data-category="all">All Products</button>
+      <button type="button" class="cat-btn" data-category="sewing">সেলাই মেশিন অল পার্টস</button>
+      <button type="button" class="cat-btn" data-category="spices">মসলার ভ্যারাইটি</button>
+    </div>
+
     <section class="products" aria-label="Available products">
-
-      <article class="product-card">
-        <img
-          class="product-image"
-          src="./lal-mariz.jpg"
-          alt="Lal mariz">
-
-        <h3>Lal mariz</h3>
-        <p class="price">₹99</p>
-        <button
-          type="button"
-          class="select-product"
-          data-product="Lal mariz">
-          Select Product
-        </button>
-      </article>
-
-      <article class="product-card">
-        <img
-          class="product-image"
-          src="./sewing-oil.png"
-          alt="Sewing oil">
+      <!-- Sewing Machine Parts Category -->
+      <article class="product-card" data-category="sewing">
+        <img class="product-image"
+             src="./sewing-oil.png"
+             alt="Sewing oil"
+             onerror="this.style.display='none'">
 
         <h3>Sewing oil</h3>
         <p class="price">₹199</p>
-        <button
-          type="button"
-          class="select-product"
-          data-product="Sewing oil">
+        <button type="button"
+                class="select-product"
+                data-product="Sewing oil">
           Select Product
         </button>
       </article>
 
+      <!-- Spices Category -->
+      <article class="product-card" data-category="spices">
+        <img class="product-image"
+             src="./lal-mariz.jpg"
+             alt="Lal mariz"
+             onerror="this.style.display='none'">
+
+        <h3>Lal mariz</h3>
+        <p class="price">₹99</p>
+        <button type="button"
+                class="select-product"
+                data-product="Lal mariz">
+          Select Product
+        </button>
+      </article>
     </section>
 
     <section class="form-card">
       <h2 class="section-title">Customer Information</h2>
 
       <form id="orderForm">
-
         <label for="name">Customer Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          autocomplete="name"
-          maxlength="100"
-          required>
+        <input type="text" id="name" name="name"
+               autocomplete="name" maxlength="100" required>
 
         <label for="phone">Phone Number</label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          autocomplete="tel"
-          maxlength="20"
-          required>
+        <input type="tel" id="phone" name="phone"
+               autocomplete="tel" maxlength="20" required>
 
         <label for="address">Delivery Address</label>
-        <textarea
-          id="address"
-          name="address"
-          autocomplete="street-address"
-          maxlength="1000"
-          required></textarea>
+        <textarea id="address" name="address"
+                  autocomplete="street-address"
+                  maxlength="1000" required></textarea>
 
         <h2 class="section-title">Order Information</h2>
 
@@ -324,55 +313,42 @@
         </select>
 
         <label for="quantity">Quantity</label>
-        <input
-          type="number"
-          id="quantity"
-          name="quantity"
-          min="1"
-          max="100"
-          step="1"
-          value="1"
-          required>
+        <input type="number" id="quantity" name="quantity"
+               min="1" max="100" step="1" value="1" required>
 
         <label for="unitPrice">Unit Price (INR ₹)</label>
-        <input
-          type="number"
-          id="unitPrice"
-          name="unitPrice"
-          value=""
-          readonly
-          required>
+        <input type="number" id="unitPrice" name="unitPrice"
+               value="" readonly required>
 
-        <input
-          type="hidden"
-          id="totalPriceInput"
-          name="totalPrice"
-          value="0.00">
+        <input type="hidden" id="totalPriceInput"
+               name="totalPrice" value="0.00">
+
+        <!-- Payment Method Selection -->
+        <label>Payment Method</label>
+        <div class="payment-options">
+          <label>
+            <input type="radio" name="paymentMethod" value="Cash on Delivery" checked>
+            Cash on Delivery (COD)
+          </label>
+          <label>
+            <input type="radio" name="paymentMethod" value="Online Payment">
+            Online Payment
+          </label>
+        </div>
 
         <div class="total-box">
           Total Price: ₹<span id="totalPrice">0.00</span>
         </div>
 
-        <button
-          type="submit"
-          class="submit-button"
-          id="submitButton">
+        <button type="submit" class="submit-button" id="submitButton">
           Place Order
         </button>
 
         <p id="message" aria-live="polite">
           Please check your details before placing your order.
         </p>
-
       </form>
-
-      <p class="note">
-        Order details are sent to our order system.
-        Order confirmation depends on the server successfully saving
-        your order.
-      </p>
     </section>
-
   </main>
 
   <footer>
@@ -380,7 +356,8 @@
   </footer>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVb7XMwD3TVT5xJwmCyfuXA08jJPbDizRj2hiZjX8_lXHRvBJUxN-Y2pzkSOdzB22q8g/exec";
+    const SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbwDIb_2UnxoZtK87FRTTVWHimMQgUeq9bo21iyAbjvRb6k5rgo-LMFfvbZbGJlSSnn14A/exec";
 
     const productPrices = {
       "Lal mariz": 99,
@@ -398,6 +375,27 @@
 
     document.getElementById("year").textContent =
       new Date().getFullYear();
+
+    // Category Filtering Script
+    const catButtons = document.querySelectorAll(".cat-btn");
+    const productCards = document.querySelectorAll(".product-card");
+
+    catButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        catButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const selectedCat = btn.dataset.category;
+
+        productCards.forEach(card => {
+          if (selectedCat === "all" || card.dataset.category === selectedCat) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
 
     function updateTotal() {
       const product = productInput.value;
@@ -444,33 +442,47 @@
         return;
       }
 
-      if (
-        !Number.isInteger(quantity) ||
-        quantity < 1 ||
-        quantity > 100
-      ) {
-        message.textContent = "Please enter a quantity from 1 to 100.";
+      if (!Number.isInteger(quantity) ||
+          quantity < 1 || quantity > 100) {
+        message.textContent =
+          "Please enter a quantity from 1 to 100.";
+        return;
+      }
+
+      const order = {
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        address: document.getElementById("address").value.trim()
+      };
+
+      if (!order.name || !order.phone || !order.address) {
+        message.textContent =
+          "Please fill in your name, phone number and address.";
         return;
       }
 
       submitButton.disabled = true;
       submitButton.textContent = "Submitting...";
-      message.textContent = "Your order is being submitted. Please wait.";
+      message.textContent = "Submitting your order. Please wait...";
 
       try {
         const formData = new FormData(form);
-        
+        const searchParams = new URLSearchParams(formData);
+
         await fetch(SCRIPT_URL, {
           method: "POST",
-          body: formData,
+          body: searchParams,
           mode: "no-cors"
         });
 
-        message.textContent = "Order placed successfully! Please check your Google Sheet.";
+        message.textContent =
+          "✅ Your order has been placed successfully!";
+
         form.reset();
         updateTotal();
       } catch (error) {
-        message.textContent = "Submission failed. Please check your internet connection and try again.";
+        message.textContent =
+          "❌ Order submission failed. Please check your internet connection.";
       } finally {
         submitButton.disabled = false;
         submitButton.textContent = "Place Order";
@@ -479,6 +491,5 @@
 
     updateTotal();
   </script>
-
 </body>
 </html>
