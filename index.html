@@ -3,470 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IK Shop Wholesale | Quality Products</title>
+  <title>IK Shop Wholesale | Home</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f8; color: #222; }
 
-    /* Top Announcement Bar */
-    .top-bar {
-      background: #000;
-      color: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 20px;
-      font-size: 12px;
-    }
-    .top-bar span { font-weight: 500; }
-
-    /* DeoDap Style Header */
-    header {
-      background: #0d1b2a;
-      color: #fff;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-    .logo-container { display: flex; align-items: center; gap: 5px; }
-    .logo-main { font-size: 26px; font-weight: 900; color: #e63946; text-transform: uppercase; text-decoration: none; letter-spacing: -0.5px; }
-    .logo-sub { font-size: 10px; background: #fff; color: #0d1b2a; padding: 2px 4px; font-weight: bold; border-radius: 2px; }
-
-    .search-bar { display: flex; flex: 1; max-width: 550px; }
-    .search-bar input { width: 100%; padding: 10px 14px; border: none; border-radius: 4px 0 0 4px; outline: none; font-size: 14px; }
-    .search-bar button { padding: 10px 20px; background: #e63946; color: #fff; border: none; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; font-size: 14px; }
-
-    .header-actions { display: flex; gap: 20px; align-items: center; font-size: 13px; }
-    .header-action-item { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-
-    /* Category Nav Strip */
-    .nav-strip { background: #1b263b; display: flex; padding: 0 20px; align-items: center; }
-    .cat-btn-main { background: #e63946; color: #fff; padding: 12px 20px; border: none; font-weight: bold; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px; }
-    .nav-links { display: flex; list-style: none; overflow-x: auto; white-space: nowrap; }
-    .nav-links li a { color: #fff; text-decoration: none; padding: 12px 16px; display: block; font-size: 13px; font-weight: 500; }
-    .nav-links li a:hover { background: rgba(255,255,255,0.1); }
-
-    /* Main Container Layout */
+    .top-bar { background: #000; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 6px 20px; font-size: 12px; }
+    header { background: #0d1b2a; color: #fff; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-main { font-size: 26px; font-weight: 900; color: #e63946; text-transform: uppercase; text-decoration: none; }
+    
     .layout-container { display: flex; margin: 20px auto; width: min(100% - 30px, 1280px); gap: 20px; }
-
-    /* Left Sidebar Categories */
-    .sidebar { width: 240px; background: #fff; border-radius: 8px; border: 1px solid #e0e0e0; flex-shrink: 0; }
-    .sidebar-header { background: #0d1b2a; color: #fff; padding: 12px 15px; font-weight: bold; font-size: 14px; border-radius: 7px 7px 0 0; display: flex; align-items: center; gap: 8px; }
+    .sidebar { width: 240px; background: #fff; border-radius: 8px; border: 1px solid #e0e0e0; height: fit-content; }
+    .sidebar-header { background: #0d1b2a; color: #fff; padding: 12px 15px; font-weight: bold; font-size: 14px; }
     .category-list { list-style: none; }
-    .category-list li { border-bottom: 1px solid #f0f0f0; }
-    .category-list li a { display: flex; justify-content: space-between; align-items: center; padding: 11px 15px; color: #333; text-decoration: none; font-size: 13px; font-weight: 500; transition: 0.2s; }
-    .category-list li a:hover, .category-list li.active a { background: #fff0f1; color: #e63946; }
+    .category-list li a { display: flex; justify-content: space-between; padding: 11px 15px; color: #333; text-decoration: none; font-size: 13px; font-weight: 500; }
+    .category-list li a:hover { background: #fff0f1; color: #e63946; }
 
-    /* Main Content Area */
     .main-content { flex: 1; }
-
-    /* Hero Banner Area */
-    .hero-section { display: grid; grid-template-columns: 1fr 220px; gap: 15px; margin-bottom: 25px; }
-    .promo-banner { background: linear-gradient(135deg, #e63946 0%, #a81c27 100%); color: white; padding: 35px 25px; border-radius: 12px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 15px rgba(230,57,70,0.2); }
-    .promo-tag { background: #fff; color: #e63946; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 20px; width: fit-content; text-transform: uppercase; margin-bottom: 10px; }
-    .promo-title { font-size: 38px; font-weight: 900; line-height: 1.1; margin-bottom: 10px; }
-    .promo-subtitle { font-size: 14px; opacity: 0.9; margin-bottom: 20px; }
-    .promo-btn { background: #0d1b2a; color: #fff; border: none; padding: 10px 22px; font-weight: bold; border-radius: 25px; cursor: pointer; width: fit-content; font-size: 13px; }
-
-    .side-badges { display: flex; flex-direction: column; gap: 12px; }
-    .badge-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .badge-icon { font-size: 22px; margin-bottom: 6px; }
-    .badge-title { font-size: 13px; font-weight: bold; color: #0d1b2a; }
-    .badge-desc { font-size: 11px; color: #777; margin-top: 2px; }
-
-    /* Products Grid */
-    .section-heading { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #0d1b2a; display: flex; align-items: center; gap: 8px; }
+    .section-heading { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #0d1b2a; }
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
     
-    .product-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 15px; text-align: left; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
+    .product-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 15px; text-decoration: none; color: inherit; display: block; transition: 0.2s; }
     .product-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
     
-    .verified-badge { background: #eaf7ef; color: #16834a; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; border: 1px solid #a5d6b8; }
+    .verified-badge { background: #eaf7ef; color: #16834a; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }
     .product-image { width: 100%; height: 170px; object-fit: contain; background: #fafafa; border-radius: 6px; margin-bottom: 10px; }
     .product-title { font-size: 15px; font-weight: bold; margin-bottom: 6px; color: #222; }
-    
-    .rating-box { font-size: 12px; color: #f39c12; margin-bottom: 8px; display: flex; align-items: center; gap: 4px; }
+    .rating-box { font-size: 12px; color: #f39c12; margin-bottom: 8px; }
     .price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; }
     .current-price { color: #e63946; font-size: 20px; font-weight: bold; }
     .mrp-price { color: #888; text-decoration: line-through; font-size: 13px; }
     .discount-tag { background: #e63946; color: #fff; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 3px; }
-
-    .shipping-info { background: #f8f9fa; padding: 6px 10px; border-radius: 4px; font-size: 11px; color: #555; margin-bottom: 12px; border-left: 3px solid #16834a; }
-
-    .action-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .btn-add-cart { background: #0d1b2a; color: #fff; border: none; padding: 9px; border-radius: 5px; font-weight: bold; font-size: 12px; cursor: pointer; }
-    .btn-buy-now { background: #e63946; color: #fff; border: none; padding: 9px; border-radius: 5px; font-weight: bold; font-size: 12px; cursor: pointer; text-transform: uppercase; }
-
-    /* Gokwik Express Checkout Modal */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.65); z-index: 1000; justify-content: center; align-items: center; }
-    .modal-card { background: #fff; width: min(100% - 20px, 440px); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: slideUp 0.25s ease-out; }
-    
-    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-    .modal-top-bar { background: #0d1b2a; color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: bold; }
-    .close-modal { cursor: pointer; font-size: 22px; color: #fff; }
-
-    .gst-banner { background: #000; color: #fff; padding: 8px 15px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; }
-    .gst-btn { background: #fff; color: #000; border: none; padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: bold; cursor: pointer; }
-
-    .modal-body { padding: 18px; }
-    .coupon-box { display: flex; border: 1px dashed #ccc; border-radius: 6px; padding: 8px 12px; align-items: center; gap: 10px; margin-bottom: 15px; background: #fdfdfd; }
-    .coupon-box input { border: none; outline: none; width: 100%; font-size: 13px; }
-
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #333; }
-    .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; outline: none; }
-    .form-group input:focus, .form-group textarea:focus { border-color: #e63946; }
-
-    .payment-options { display: flex; gap: 15px; margin-top: 5px; }
-    .payment-options label { font-size: 12px; font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-
-    .submit-order-btn { width: 100%; background: #e63946; color: #fff; border: none; padding: 13px; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 10px; }
-    .submit-order-btn:disabled { background: #888; cursor: not-allowed; }
-
-    .gokwik-footer { text-align: center; margin-top: 12px; font-size: 11px; color: #777; }
-
-    /* Toast Notification */
-    .toast { position: fixed; bottom: 20px; right: 20px; background: #000; color: #fff; padding: 12px 20px; border-radius: 6px; font-size: 13px; font-weight: 500; display: none; z-index: 2000; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-
-    @media (max-width: 850px) {
-      .layout-container { flex-direction: column; }
-      .sidebar { width: 100%; }
-      .hero-section { grid-template-columns: 1fr; }
-      .side-badges { flex-direction: row; }
-    }
   </style>
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
   <div class="top-bar">
     <span>🎧 Help & Support: sewingdeosupport@gmail.com</span>
     <span>🚚 Free Shipping on orders above ₹599</span>
   </div>
 
-  <!-- Main Header -->
   <header>
-    <div class="logo-container">
-      <a href="#" class="logo-main">IK SHOP</a>
-      <span class="logo-sub">WHOLESALE</span>
-    </div>
-    <div class="search-bar">
-      <input type="text" placeholder="Search For Products, Parts & Variety...">
-      <button>Search</button>
-    </div>
-    <div class="header-actions">
-      <div class="header-action-item">👤 Account</div>
-      <div class="header-action-item">❤️ Wishlist</div>
-      <div class="header-action-item">🛒 Cart (<span id="cartCount">0</span>)</div>
-    </div>
+    <a href="index.html" class="logo-main">IK SHOP</a>
   </header>
 
-  <!-- Navigation Strip -->
-  <nav class="nav-strip">
-    <button class="cat-btn-main">☰ Shop By Category</button>
-    <ul class="nav-links">
-      <li><a href="#">Just Arrived</a></li>
-      <li><a href="#">Best Seller</a></li>
-      <li><a href="#">Daily Deals</a></li>
-      <li><a href="#">Sewing Machine Parts</a></li>
-      <li><a href="#">Spice Variety</a></li>
-    </ul>
-  </nav>
-
-  <!-- Main Layout -->
   <div class="layout-container">
-
-    <!-- Left Category Sidebar -->
     <aside class="sidebar">
-      <div class="sidebar-header">☰ Shop By Category</div>
+      <div class="sidebar-header">☰ Categories</div>
       <ul class="category-list">
-        <li class="active" data-cat="all"><a href="#">All Categories <span>›</span></a></li>
-        <li data-cat="sewing"><a href="#">Sewing Machine Parts <span>›</span></a></li>
-        <li data-cat="spices"><a href="#">Spice Variety <span>›</span></a></li>
-        <li data-cat="tools"><a href="#">Hardware & Tools <span>›</span></a></li>
-        <li data-cat="home"><a href="#">Home Essentials <span>›</span></a></li>
+        <li><a href="#">Sewing Machine Parts <span>›</span></a></li>
+        <li><a href="#">Spice Variety <span>›</span></a></li>
       </ul>
     </aside>
 
-    <!-- Right Main Content -->
     <main class="main-content">
-
-      <!-- Hero Section -->
-      <div class="hero-section">
-        <div class="promo-banner">
-          <span class="promo-tag">Unbeatable Prices</span>
-          <h1 class="promo-title">₹1 COLLECTION</h1>
-          <p class="promo-subtitle">Add eligible wholesale products to your cart now!</p>
-          <button class="promo-btn">SHOP NOW ></button>
-        </div>
-        <div class="side-badges">
-          <div class="badge-card">
-            <div class="badge-icon">🏷️</div>
-            <div class="badge-title">Lowest Prices</div>
-            <div class="badge-desc">On Everything</div>
-          </div>
-          <div class="badge-card">
-            <div class="badge-icon">📄</div>
-            <div class="badge-title">GST Inclusive</div>
-            <div class="badge-desc">No extra checkout fee</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Products Grid -->
       <div class="section-heading">Featured Wholesale Products</div>
       
       <div class="product-grid">
-
-        <!-- Product 1: Sewing Machine Suto Stand (NEW) -->
-        <article class="product-card" data-category="sewing">
+        <!-- Product 1 -->
+        <a href="product-detail.html" class="product-card">
           <span class="verified-badge">✔ GENUINE & VERIFIED</span>
-          <img class="product-image" src="./Sewing Machine Suto Stand.jpeg" alt="Sewing Machine Suto Stand" onerror="this.src='https://via.placeholder.com/170'">
+          <img class="product-image" src="./Sewing Machine Suto Stand.jpeg" alt="Suto Stand" onerror="this.src='https://via.placeholder.com/170'">
           <h3 class="product-title">Sewing Machine Suto Stand</h3>
-          <div class="rating-box">★★★★★ <span>(5.0)</span></div>
+          <div class="rating-box">★★★★★ (5.0)</div>
           <div class="price-row">
             <span class="current-price">₹199.00</span>
             <span class="mrp-price">₹349.00</span>
             <span class="discount-tag">43% OFF</span>
           </div>
-          <div class="shipping-info">🚚 Free Shipping available</div>
-          <div class="action-buttons">
-            <button class="btn-add-cart" onclick="addToCart('Sewing Machine Suto Stand')">ADD TO CART</button>
-            <button class="btn-buy-now" onclick="openCheckout('Sewing Machine Suto Stand', 199)">BUY NOW ></button>
-          </div>
-        </article>
-
-        <!-- Product 2: Bobbin Holder -->
-<article class="product-card" data-category="sewing">
-  <span class="verified-badge">✔ GENUINE & VERIFIED</span>
-  <!-- ছবির সঠিক ফাইলের নাম এখানে দিন -->
-  <img class="product-image" src="./bobbin-holder.jpg" alt="All Sewing Machine Bobbin Holder" onerror="this.src='https://via.placeholder.com/170'">
-  <h3 class="product-title">All Sewing Machine Bobbin Holder</h3>
-  <div class="rating-box">★★★★★ <span>(5.0)</span></div>
-  <div class="price-row">
-    <span class="current-price">₹299.00</span>
-    <span class="mrp-price">₹499.00</span>
-    <span class="discount-tag">40% OFF</span>
-  </div>
-  <div class="shipping-info">🚚 Free Shipping available</div>
-  <div class="action-buttons">
-    <button class="btn-add-cart" onclick="addToCart('All Sewing Machine Bobbin Holder')">ADD TO CART</button>
-    <button class="btn-buy-now" onclick="openCheckout('All Sewing Machine Bobbin Holder', 299)">BUY NOW ></button>
-  </div>
-</article>
-        <!-- Product 3: Sewing Oil -->
-        <article class="product-card" data-category="sewing">
-          <span class="verified-badge">✔ GENUINE & VERIFIED</span>
-          <img class="product-image" src="./sewing-oil.png" alt="Sewing Oil" onerror="this.src='https://via.placeholder.com/170'">
-          <h3 class="product-title">Sewing Machine Oil (High Grade)</h3>
-          <div class="rating-box">★★★★★ <span>(4.9)</span></div>
-          <div class="price-row">
-            <span class="current-price">₹199.00</span>
-            <span class="mrp-price">₹399.00</span>
-            <span class="discount-tag">50% OFF</span>
-          </div>
-          <div class="shipping-info">🚚 Free Shipping available</div>
-          <div class="action-buttons">
-            <button class="btn-add-cart" onclick="addToCart('Sewing Machine Oil')">ADD TO CART</button>
-            <button class="btn-buy-now" onclick="openCheckout('Sewing Machine Oil', 199)">BUY NOW ></button>
-          </div>
-        </article>
-
-        <!-- Product 4: Lal Mariz -->
-        <article class="product-card" data-category="spices">
-          <span class="verified-badge">✔ GENUINE & VERIFIED</span>
-          <img class="product-image" src="./lal-mariz.jpg" alt="Lal Mariz" onerror="this.src='https://via.placeholder.com/170'">
-          <h3 class="product-title">Premium Lal Mariz Powder</h3>
-          <div class="rating-box">★★★★★ <span>(4.8)</span></div>
-          <div class="price-row">
-            <span class="current-price">₹99.00</span>
-            <span class="mrp-price">₹199.00</span>
-            <span class="discount-tag">50% OFF</span>
-          </div>
-          <div class="shipping-info">🚚 Free Shipping available</div>
-          <div class="action-buttons">
-            <button class="btn-add-cart" onclick="addToCart('Premium Lal Mariz Powder')">ADD TO CART</button>
-            <button class="btn-buy-now" onclick="openCheckout('Premium Lal Mariz Powder', 99)">BUY NOW ></button>
-          </div>
-        </article>
-
+        </a>
       </div>
     </main>
   </div>
-
-  <!-- Gokwik Style Checkout Modal -->
-  <div class="modal-overlay" id="checkoutModal">
-    <div class="modal-card">
-      <div class="modal-top-bar">
-        <span>Instant Express Checkout</span>
-        <span class="close-modal" onclick="closeCheckout()">&times;</span>
-      </div>
-      <div class="gst-banner">
-        <span>Claim your GST invoice & save more</span>
-        <button class="gst-btn">Add GST</button>
-      </div>
-
-      <div class="modal-body">
-        <div class="coupon-box">
-          🏷️ <input type="text" placeholder="Enter coupon code">
-        </div>
-
-        <form id="expressOrderForm">
-          <div class="form-group">
-            <label>Selected Product</label>
-            <input type="text" id="modalProduct" name="product" readonly>
-          </div>
-
-          <div class="form-group">
-            <label>Quantity</label>
-            <input type="number" id="modalQty" name="quantity" value="1" min="1" max="100" oninput="updateModalTotal()">
-          </div>
-
-          <div class="form-group">
-            <label>Total Price (INR)</label>
-            <input type="text" id="modalTotal" name="totalPrice" readonly>
-            <input type="hidden" id="modalUnitPrice" name="unitPrice">
-          </div>
-
-          <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" id="custName" name="name" placeholder="Enter your name" required>
-          </div>
-
-          <div class="form-group">
-            <label>Mobile Number</label>
-            <input type="tel" id="custPhone" name="phone" placeholder="10-digit mobile number" required>
-          </div>
-
-          <div class="form-group">
-            <label>Delivery Address</label>
-            <textarea id="custAddress" name="address" rows="2" placeholder="House No, Street Name, Area, Pincode" required></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>Payment Option</label>
-            <div class="payment-options">
-              <label><input type="radio" name="paymentMethod" value="Cash on Delivery" checked> Cash on Delivery (COD)</label>
-              <label><input type="radio" name="paymentMethod" value="Online Payment"> Online Payment</label>
-            </div>
-          </div>
-
-          <button type="submit" class="submit-order-btn" id="modalSubmitBtn">Place Order</button>
-          <p id="modalMsg" style="text-align: center; font-size: 12px; margin-top: 8px;"></p>
-        </form>
-
-        <div class="gokwik-footer">🔒 Trusted by 1M+ shoppers daily</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Notification -->
-  <div class="toast" id="toast">Product added in cart</div>
-
-  <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwf9kNdVVRe7TfAmQtS4KmShYVo1ufVk5EFnuv41OaH_kzVytpBcwmtyrGv-KvWFPdl/exec";
-    const RAZORPAY_ME_URL = "https://razorpay.me/@imransekh8626";
-
-    let currentPrice = 0;
-    let cartCount = 0;
-
-    function addToCart(productName) {
-      cartCount++;
-      document.getElementById("cartCount").textContent = cartCount;
-      showToast(productName + " added to cart");
-    }
-
-    function showToast(text) {
-      const toast = document.getElementById("toast");
-      toast.textContent = text;
-      toast.style.display = "block";
-      setTimeout(() => { toast.style.display = "none"; }, 2500);
-    }
-
-    function openCheckout(productName, price) {
-      currentPrice = price;
-      document.getElementById("modalProduct").value = productName;
-      document.getElementById("modalUnitPrice").value = price;
-      document.getElementById("modalQty").value = 1;
-      updateModalTotal();
-      document.getElementById("checkoutModal").style.display = "flex";
-    }
-
-    function closeCheckout() {
-      document.getElementById("checkoutModal").style.display = "none";
-      document.getElementById("modalMsg").textContent = "";
-    }
-
-    function updateModalTotal() {
-      const qty = Number(document.getElementById("modalQty").value) || 1;
-      const total = qty * currentPrice;
-      document.getElementById("modalTotal").value = "₹" + total.toFixed(2);
-    }
-
-    // Category Filter Script
-    document.querySelectorAll(".category-list li").forEach(item => {
-      item.addEventListener("click", () => {
-        document.querySelectorAll(".category-list li").forEach(i => i.classList.remove("active"));
-        item.classList.add("active");
-
-        const selectedCat = item.dataset.cat;
-        document.querySelectorAll(".product-card").forEach(card => {
-          if (selectedCat === "all" || card.dataset.category === selectedCat) {
-            card.style.display = "block";
-          } else {
-            card.style.display = "none";
-          }
-        });
-      });
-    });
-
-    // Form Submit Logic
-    document.getElementById("expressOrderForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
-
-      const btn = document.getElementById("modalSubmitBtn");
-      const msg = document.getElementById("modalMsg");
-      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-
-      btn.disabled = true;
-      btn.textContent = "Processing Order...";
-      msg.textContent = "Submitting your order...";
-
-      try {
-        const formData = new FormData(this);
-        formData.append("paymentStatus", paymentMethod === "Online Payment" ? "Pending Online Payment" : "COD Pending");
-
-        const searchParams = new URLSearchParams(formData);
-
-        await fetch(SCRIPT_URL, {
-          method: "POST",
-          body: searchParams,
-          mode: "no-cors"
-        });
-
-        if (paymentMethod === "Online Payment") {
-          msg.textContent = "Redirecting to Razorpay Payment...";
-          setTimeout(() => {
-            window.location.href = RAZORPAY_ME_URL;
-          }, 1200);
-        } else {
-          msg.textContent = "✅ Order placed successfully!";
-          setTimeout(() => {
-            closeCheckout();
-            this.reset();
-          }, 2000);
-        }
-
-      } catch (err) {
-        msg.textContent = "❌ Submission failed. Please try again.";
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Place Order";
-      }
-    });
-  </script>
 </body>
 </html>
