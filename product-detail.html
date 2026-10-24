@@ -9,7 +9,7 @@
     body { background-color: #f4f6f8; color: #222; }
 
     header { background: #0d1b2a; color: #fff; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
-    .logo-main { font-size: 24px; font-weight: 900; color: #e63946; text-decoration: none; }
+    .logo-main { font-size: 24px; font-weight: 900; color: #f04483; text-decoration: none; }
 
     .detail-container { display: flex; gap: 30px; width: min(100% - 30px, 1100px); margin: 30px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 
@@ -17,7 +17,7 @@
     .gallery-section { display: flex; gap: 15px; width: 50%; }
     .thumbnail-list { display: flex; flex-direction: column; gap: 10px; }
     .thumbnail-list img { width: 65px; height: 65px; object-fit: contain; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; background: #fafafa; padding: 4px; }
-    .thumbnail-list img:hover, .thumbnail-list img.active { border-color: #e63946; }
+    .thumbnail-list img:hover, .thumbnail-list img.active { border-color: #f04483; }
     .main-preview-img { width: 100%; height: 400px; object-fit: contain; background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 10px; }
 
     /* Right Info Section */
@@ -29,15 +29,15 @@
     .shipping-box { background: #f8f9fa; border: 1px solid #e0e0e0; padding: 10px 15px; border-radius: 6px; font-size: 13px; margin-bottom: 15px; border-left: 4px solid #16834a; }
     
     .price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
-    .current-price { color: #e63946; font-size: 28px; font-weight: bold; }
+    .current-price { color: #f04483; font-size: 28px; font-weight: bold; }
     .mrp-price { color: #888; text-decoration: line-through; font-size: 16px; }
-    .discount-tag { background: #e63946; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 4px; }
+    .discount-tag { background: #f04483; color: #fff; font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 4px; }
 
-    .activity-box { background: #fff9f9; border: 1px dashed #e63946; padding: 10px 15px; border-radius: 6px; font-size: 13px; margin-bottom: 20px; color: #c92a37; }
+    .activity-box { background: #fff0f6; border: 1px dashed #f04483; padding: 10px 15px; border-radius: 6px; font-size: 13px; margin-bottom: 20px; color: #d92d70; }
 
     .action-buttons { display: flex; gap: 15px; }
     .btn-cart { flex: 1; background: #0d1b2a; color: #fff; border: none; padding: 14px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 15px; }
-    .btn-buy { flex: 1; background: #e63946; color: #fff; border: none; padding: 14px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 15px; text-transform: uppercase; }
+    .btn-buy { flex: 1; background: #f04483; color: #fff; border: none; padding: 14px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 15px; text-transform: uppercase; }
 
     /* Modal Checkout */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
@@ -47,7 +47,7 @@
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 4px; }
     .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; }
-    .submit-btn { width: 100%; background: #e63946; color: #fff; border: none; padding: 13px; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 10px; }
+    .submit-btn { width: 100%; background: #f04483; color: #fff; border: none; padding: 13px; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 10px; }
 
     @media (max-width: 768px) { 
       .detail-container { flex-direction: column; } 
@@ -93,7 +93,7 @@
       </div>
 
       <div class="action-buttons">
-        <button class="btn-cart" onclick="alert('Product added to cart!')">ADD TO CART</button>
+        <button class="btn-cart" onclick="addCurrentProductToCart()">ADD TO CART</button>
         <button class="btn-buy" onclick="openCheckout()">BUY NOW</button>
       </div>
     </div>
@@ -204,6 +204,19 @@
       thumbList.appendChild(imgEl);
     });
 
+    function addCurrentProductToCart() {
+      try {
+        const cart = JSON.parse(localStorage.getItem("ikShopCart") || "[]");
+        const item = cart.find(entry => entry.id === productId);
+        if (item) item.qty += 1;
+        else cart.push({ id: productId, qty: 1 });
+        localStorage.setItem("ikShopCart", JSON.stringify(cart));
+        alert("Added to cart: " + currentProd.title);
+      } catch (error) {
+        alert("Could not update cart. Please try again.");
+      }
+    }
+
     function openCheckout() {
       document.getElementById("checkoutModal").style.display = "flex";
     }
@@ -235,7 +248,7 @@
             await saveOrderToSheet(currentProd.title, "₹" + currentProd.price, name, phone, address, "Online Paid (" + response.razorpay_payment_id + ")");
           },
           "prefill": { "name": name, "contact": phone },
-          "theme": { "color": "#e63946" }
+          "theme": { "color": "#f04483" }
         };
         var rzp1 = new Razorpay(options);
         rzp1.open();
