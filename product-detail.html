@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Details | IK Shop</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f8; color: #222; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #f4f6f8; color: #222; }
 
     header { background: #0d1b2a; color: #fff; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
     .logo-main { font-size: 24px; font-weight: 900; color: #e63946; text-decoration: none; }
@@ -39,7 +39,7 @@
     .btn-cart { flex: 1; background: #0d1b2a; color: #fff; border: none; padding: 14px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 15px; }
     .btn-buy { flex: 1; background: #e63946; color: #fff; border: none; padding: 14px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 15px; text-transform: uppercase; }
 
-    /* GoKwik Style Express Checkout Modal */
+    /* Modal Checkout */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; }
     .modal-card { background: #fff; width: min(100% - 20px, 440px); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
     .modal-top { background: #0d1b2a; color: #fff; padding: 12px 18px; display: flex; justify-content: space-between; font-weight: bold; }
@@ -49,7 +49,12 @@
     .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; }
     .submit-btn { width: 100%; background: #e63946; color: #fff; border: none; padding: 13px; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 10px; }
 
-    @media (max-width: 768px) { .detail-container { flex-direction: column; } .gallery-section { width: 100%; } .info-section { width: 100%; } }
+    @media (max-width: 768px) { 
+      .detail-container { flex-direction: column; } 
+      .gallery-section { width: 100%; flex-direction: column-reverse; } 
+      .info-section { width: 100%; } 
+      .thumbnail-list { flex-direction: row; }
+    }
   </style>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
@@ -61,7 +66,6 @@
   </header>
 
   <div class="detail-container">
-    <!-- Left Gallery -->
     <div class="gallery-section">
       <div class="thumbnail-list" id="thumbList"></div>
       <div>
@@ -69,7 +73,6 @@
       </div>
     </div>
 
-    <!-- Right Info Section -->
     <div class="info-section">
       <span class="verified-badge">✔ GENUINE & VERIFIED</span>
       <h1 class="product-title" id="pTitle">Product Name</h1>
@@ -96,7 +99,6 @@
     </div>
   </div>
 
-  <!-- Modal Checkout -->
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-card">
       <div class="modal-top">
@@ -139,7 +141,6 @@
   </div>
 
   <script>
-    // Product Database
     const productsDB = {
       "suto-stand": {
         title: "Sewing Machine Suto Stand",
@@ -175,7 +176,6 @@
       }
     };
 
-    // Load Dynamic Product Details from URL
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id') || "suto-stand";
     const currentProd = productsDB[productId] || productsDB["suto-stand"];
