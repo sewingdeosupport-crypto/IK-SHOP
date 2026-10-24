@@ -51,7 +51,6 @@
 
     @media (max-width: 768px) { .detail-container { flex-direction: column; } .gallery-section { width: 100%; } .info-section { width: 100%; } }
   </style>
-  <!-- Razorpay Checkout Script -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
@@ -62,32 +61,28 @@
   </header>
 
   <div class="detail-container">
-    <!-- Left Gallery with Multiple Thumbnails -->
+    <!-- Left Gallery -->
     <div class="gallery-section">
-      <div class="thumbnail-list">
-        <img src="./Sewing Machine Suto Stand.jpeg" class="active" onclick="changeImage(this)" onerror="this.src='https://via.placeholder.com/65'">
-        <img src="./bobbin-holder.jpg" onclick="changeImage(this)" onerror="this.src='https://via.placeholder.com/65'">
-        <img src="./sewing-oil.png" onclick="changeImage(this)" onerror="this.src='https://via.placeholder.com/65'">
-      </div>
+      <div class="thumbnail-list" id="thumbList"></div>
       <div>
-        <img id="mainImage" src="./Sewing Machine Suto Stand.jpeg" class="main-preview-img" onerror="this.src='https://via.placeholder.com/400'">
+        <img id="mainImage" src="" class="main-preview-img" onerror="this.src='https://via.placeholder.com/400'">
       </div>
     </div>
 
-    <!-- Right Product Details -->
+    <!-- Right Info Section -->
     <div class="info-section">
       <span class="verified-badge">✔ GENUINE & VERIFIED</span>
-      <h1 class="product-title">Sewing Machine Suto Stand</h1>
-      <div class="sku-text">SKU: ik_suto_stand_01 &nbsp;|&nbsp; DSIN: 19933</div>
+      <h1 class="product-title" id="pTitle">Product Name</h1>
+      <div class="sku-text" id="pSku">SKU: ik_product_01</div>
 
       <div class="shipping-box">
         🚚 <b>Free Shipping</b> available across all locations.
       </div>
 
       <div class="price-row">
-        <span class="current-price">₹199.00</span>
-        <span class="mrp-price">₹349.00</span>
-        <span class="discount-tag">43% OFF</span>
+        <span class="current-price" id="pPrice">₹0.00</span>
+        <span class="mrp-price" id="pMrp">₹0.00</span>
+        <span class="discount-tag" id="pDiscount">0% OFF</span>
       </div>
 
       <div class="activity-box">
@@ -101,7 +96,7 @@
     </div>
   </div>
 
-  <!-- Express Checkout Modal -->
+  <!-- Modal Checkout -->
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-card">
       <div class="modal-top">
@@ -112,11 +107,11 @@
         <form id="orderForm">
           <div class="form-group">
             <label>Product Name</label>
-            <input type="text" name="product" id="prodName" value="Sewing Machine Suto Stand" readonly>
+            <input type="text" name="product" id="prodName" readonly>
           </div>
           <div class="form-group">
             <label>Price (INR)</label>
-            <input type="text" name="totalPrice" id="prodPrice" value="199" readonly>
+            <input type="text" name="totalPrice" id="prodPrice" readonly>
           </div>
           <div class="form-group">
             <label>Full Name</label>
@@ -144,11 +139,70 @@
   </div>
 
   <script>
-    function changeImage(element) {
-      document.querySelectorAll(".thumbnail-list img").forEach(img => img.classList.remove("active"));
-      element.classList.add("active");
-      document.getElementById("mainImage").src = element.src;
-    }
+    // Product Database
+    const productsDB = {
+      "suto-stand": {
+        title: "Sewing Machine Suto Stand",
+        price: 199,
+        mrp: 349,
+        discount: "43% OFF",
+        sku: "SKU: ik_suto_stand_01 | DSIN: 19933",
+        images: ["./Sewing Machine Suto Stand.jpeg", "./bobbin-holder.jpg", "./sewing-oil.png"]
+      },
+      "bobbin-holder": {
+        title: "All Sewing Machine Bobbin Holder",
+        price: 299,
+        mrp: 499,
+        discount: "40% OFF",
+        sku: "SKU: ik_bobbin_02 | DSIN: 19934",
+        images: ["./bobbin-holder.jpg", "./Sewing Machine Suto Stand.jpeg", "./sewing-oil.png"]
+      },
+      "sewing-oil": {
+        title: "Sewing Machine Oil (High Grade)",
+        price: 199,
+        mrp: 399,
+        discount: "50% OFF",
+        sku: "SKU: ik_oil_03 | DSIN: 19935",
+        images: ["./sewing-oil.png", "./Sewing Machine Suto Stand.jpeg", "./bobbin-holder.jpg"]
+      },
+      "lal-mariz": {
+        title: "Premium Lal Mariz Powder",
+        price: 99,
+        mrp: 199,
+        discount: "50% OFF",
+        sku: "SKU: ik_mariz_04 | DSIN: 19936",
+        images: ["./lal-mariz.jpg", "./sewing-oil.png", "./bobbin-holder.jpg"]
+      }
+    };
+
+    // Load Dynamic Product Details from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id') || "suto-stand";
+    const currentProd = productsDB[productId] || productsDB["suto-stand"];
+
+    document.getElementById("pTitle").innerText = currentProd.title;
+    document.getElementById("pSku").innerText = currentProd.sku;
+    document.getElementById("pPrice").innerText = "₹" + currentProd.price + ".00";
+    document.getElementById("pMrp").innerText = "₹" + currentProd.mrp + ".00";
+    document.getElementById("pDiscount").innerText = currentProd.discount;
+    document.getElementById("mainImage").src = currentProd.images[0];
+
+    document.getElementById("prodName").value = currentProd.title;
+    document.getElementById("prodPrice").value = "₹" + currentProd.price + ".00";
+
+    const thumbList = document.getElementById("thumbList");
+    thumbList.innerHTML = "";
+    currentProd.images.forEach((imgSrc, index) => {
+      const imgEl = document.createElement("img");
+      imgEl.src = imgSrc;
+      if (index === 0) imgEl.classList.add("active");
+      imgEl.onclick = function() {
+        document.querySelectorAll(".thumbnail-list img").forEach(i => i.classList.remove("active"));
+        this.classList.add("active");
+        document.getElementById("mainImage").src = imgSrc;
+      };
+      thumbList.appendChild(imgEl);
+    });
 
     function openCheckout() {
       document.getElementById("checkoutModal").style.display = "flex";
@@ -162,8 +216,6 @@
     document.getElementById("orderForm").addEventListener("submit", async function(e) {
       e.preventDefault();
 
-      const productName = document.getElementById("prodName").value;
-      const amount = 199 * 100; // Amount in paise (₹199)
       const name = document.getElementById("custName").value;
       const phone = document.getElementById("custPhone").value;
       const address = document.getElementById("custAddress").value;
@@ -172,31 +224,23 @@
       closeCheckout();
 
       if (payMethod === "Online Payment") {
-        // Razorpay Checkout Integration using your Live Key
         var options = {
           "key": "rzp_live_TrppjNfmdmkJLQ", 
-          "amount": amount, 
+          "amount": currentProd.price * 100, 
           "currency": "INR",
           "name": "IK SHOP",
-          "description": productName,
+          "description": currentProd.title,
           "handler": async function (response){
             alert("✅ Payment Successful! Payment ID: " + response.razorpay_payment_id);
-            // Google Sheet-এ ডেটা পাঠানোর জন্য
-            await saveOrderToSheet(productName, "₹199", name, phone, address, "Online Paid (" + response.razorpay_payment_id + ")");
+            await saveOrderToSheet(currentProd.title, "₹" + currentProd.price, name, phone, address, "Online Paid (" + response.razorpay_payment_id + ")");
           },
-          "prefill": {
-            "name": name,
-            "contact": phone
-          },
-          "theme": {
-            "color": "#e63946"
-          }
+          "prefill": { "name": name, "contact": phone },
+          "theme": { "color": "#e63946" }
         };
         var rzp1 = new Razorpay(options);
         rzp1.open();
       } else {
-        // COD Order
-        await saveOrderToSheet(productName, "₹199", name, phone, address, "Cash on Delivery");
+        await saveOrderToSheet(currentProd.title, "₹" + currentProd.price, name, phone, address, "Cash on Delivery");
         alert("✅ Order placed successfully via COD!");
       }
     });
