@@ -49,6 +49,8 @@
     .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; }
     .submit-btn { width: 100%; background: #f04483; color: #fff; border: none; padding: 13px; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 10px; }
 
+    .related-section{width:min(100% - 30px,1100px);margin:0 auto 40px}.related-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}.related-heading h2{font-size:23px;color:#0d1b2a}.related-heading p{font-size:13px;color:#687084;margin-top:4px}.related-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.related-card{background:#fff;border:1px solid #e5e7ef;border-radius:12px;padding:12px;min-width:0;box-shadow:0 4px 14px rgba(13,27,42,.05)}.related-card img{width:100%;height:155px;object-fit:contain;background:#f7f8fb;border-radius:8px;display:block}.related-card h3{font-size:14px;line-height:1.4;margin:10px 0 7px;color:#101b43;min-height:39px}.related-price{color:#f04483;font-weight:800;font-size:17px;margin-bottom:10px}.related-card a{display:block;text-align:center;background:#0d1b2a;color:#fff;text-decoration:none;border-radius:7px;padding:10px 6px;font-size:12px;font-weight:700}.related-card a:hover{background:#f04483}@media(max-width:760px){.related-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.related-card{padding:9px}.related-card img{height:125px}.related-heading h2{font-size:19px}}@media(max-width:380px){.related-grid{grid-template-columns:1fr 1fr}.related-card h3{font-size:12px}}
+
     @media (max-width: 768px) { 
       .detail-container { flex-direction: column; } 
       .gallery-section { width: 100%; flex-direction: column-reverse; } 
@@ -98,6 +100,12 @@
       </div>
     </div>
   </div>
+
+
+  <section class="related-section" id="relatedProducts" aria-label="More products">
+    <div class="related-heading"><div><h2>More Products You May Like</h2><p>Explore more products from IK Shop</p></div><a href="index.html" style="color:#f04483;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap">View All →</a></div>
+    <div class="related-grid" id="relatedGrid"></div>
+  </section>
 
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-card">
@@ -183,6 +191,26 @@
         images: ["./lal-mariz.jpg", "./sewing-oil.png", "./bobbin-holder.jpg"]
       }
     };
+
+
+    const relatedProducts = [
+      {id:"suto-stand",title:"Sewing Machine Suto Stand",price:199,image:"./Sewing%20Machine%20Suto%20Stand.jpeg"},
+      {id:"bobbin-case",title:"SELECT Bobbin Case",price:89,image:"./bobbin-case-poster.png"},
+      {id:"bobbin-holder",title:"All Sewing Machine Bobbin Holder",price:299,image:"./bobbin-holder.jpg"},
+      {id:"sewing-oil",title:"Sewing Machine Oil (High Grade)",price:199,image:"./sewing-oil.png"},
+      {id:"lal-mariz",title:"Premium Lal Mariz Powder",price:99,image:"./lal-mariz.jpg"}
+    ];
+    const relatedGrid = document.getElementById("relatedGrid");
+    relatedProducts.forEach(function(p) {
+      if (p.id === new URLSearchParams(window.location.search).get("id")) return;
+      const card = document.createElement("article"); card.className = "related-card";
+      const imageLink = document.createElement("a"); imageLink.href = "product-detail.html?id=" + p.id; imageLink.style.cssText = "padding:0;background:transparent";
+      const image = document.createElement("img"); image.src = p.image; image.alt = p.title; image.onerror = function(){this.onerror=null;this.src="https://placehold.co/400x300/f6f7fb/101b43?text=IK+Shop";}; imageLink.appendChild(image);
+      const title = document.createElement("h3"); title.textContent = p.title;
+      const price = document.createElement("div"); price.className = "related-price"; price.textContent = "₹" + p.price + ".00";
+      const link = document.createElement("a"); link.href = "product-detail.html?id=" + p.id; link.textContent = "VIEW DETAILS";
+      card.append(imageLink,title,price,link); relatedGrid.appendChild(card);
+    });
 
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id') || "suto-stand";
