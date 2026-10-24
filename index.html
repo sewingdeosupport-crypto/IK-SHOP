@@ -3,292 +3,118 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IK Shop Wholesale | India's Leading Wholesale Store</title>
+  <title>IK Shop Wholesale | Home</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-    body { background-color: #f4f6f8; color: #333; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #f4f6f8; color: #222; }
 
-    /* Top Announcement Bar */
-    .top-bar { background: #000; color: #fff; font-size: 12px; padding: 7px 20px; display: flex; justify-content: space-between; align-items: center; }
-    .top-bar a { color: #f39c12; text-decoration: none; font-weight: bold; }
-
-    /* Main Header */
-    header { background: #0d1b2a; color: #fff; padding: 12px 25px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-    .logo-container { display: flex; align-items: center; gap: 8px; text-decoration: none; }
-    .logo-main { font-size: 26px; font-weight: 900; color: #e63946; letter-spacing: -0.5px; }
-    .logo-sub { background: #e63946; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; }
-
-    /* Search Bar */
-    .search-box { display: flex; flex: 1; max-width: 600px; }
-    .search-box input { width: 100%; padding: 10px 15px; border: none; border-radius: 4px 0 0 4px; outline: none; font-size: 14px; }
-    .search-box button { background: #e63946; color: white; border: none; padding: 10px 22px; font-weight: bold; border-radius: 0 4px 4px 0; cursor: pointer; }
-
-    .header-actions { display: flex; gap: 20px; align-items: center; font-size: 13px; font-weight: 600; }
-    .action-item { display: flex; align-items: center; gap: 6px; cursor: pointer; color: #fff; text-decoration: none; }
-
-    /* Navigation Category Strip */
-    .nav-strip { background: #1b263b; display: flex; align-items: center; padding: 0 25px; overflow-x: auto; white-space: nowrap; }
-    .cat-btn-main { background: #e63946; color: #fff; padding: 12px 20px; font-weight: bold; font-size: 13px; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-    .nav-links { display: flex; list-style: none; }
-    .nav-links li a { color: #e0e6ed; text-decoration: none; padding: 12px 18px; font-size: 13px; font-weight: 500; display: block; transition: 0.2s; }
-    .nav-links li a:hover { background: rgba(255,255,255,0.1); color: #fff; }
-
-    /* Main Container Layout */
-    .layout-container { display: flex; width: min(100% - 30px, 1280px); margin: 20px auto; gap: 20px; }
-
-    /* Sidebar Categories */
-    .sidebar { width: 250px; background: #fff; border-radius: 8px; border: 1px solid #e0e0e0; flex-shrink: 0; height: fit-content; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-    .sidebar-header { background: #0d1b2a; color: #fff; padding: 14px 18px; font-weight: bold; font-size: 14px; border-radius: 7px 7px 0 0; }
+    .top-bar { background: #000; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 6px 20px; font-size: 12px; }
+    header { background: #0d1b2a; color: #fff; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-main { font-size: 26px; font-weight: 900; color: #e63946; text-transform: uppercase; text-decoration: none; }
+    
+    .layout-container { display: flex; margin: 20px auto; width: min(100% - 30px, 1280px); gap: 20px; }
+    .sidebar { width: 240px; background: #fff; border-radius: 8px; border: 1px solid #e0e0e0; height: fit-content; }
+    .sidebar-header { background: #0d1b2a; color: #fff; padding: 12px 15px; font-weight: bold; font-size: 14px; }
     .category-list { list-style: none; }
-    .category-list li { border-bottom: 1px solid #f0f0f0; }
-    .category-list li a { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; color: #444; text-decoration: none; font-size: 13px; font-weight: 500; transition: 0.2s; }
-    .category-list li a:hover { background: #fff0f1; color: #e63946; font-weight: 600; }
+    .category-list li a { display: flex; justify-content: space-between; padding: 11px 15px; color: #333; text-decoration: none; font-size: 13px; font-weight: 500; }
+    .category-list li a:hover { background: #fff0f1; color: #e63946; }
 
-    /* Main Content Right */
     .main-content { flex: 1; }
-
-    /* Hero Promo Banners (DeoDap Style) */
-    .hero-banner { background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%); color: #fff; padding: 30px 35px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-    .hero-text h1 { font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 8px; }
-    .hero-text p { font-size: 14px; color: #cbd5e1; margin-bottom: 18px; }
-    .hero-btn { background: #e63946; color: #fff; border: none; padding: 10px 24px; border-radius: 25px; font-weight: bold; font-size: 13px; cursor: pointer; text-decoration: none; display: inline-block; }
-
-    .trust-badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-    .badge-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; text-align: center; font-size: 12px; font-weight: 600; color: #334155; }
-    .badge-box span { font-size: 20px; display: block; margin-bottom: 4px; }
-
-    /* Section Heading */
-    .section-title { font-size: 18px; font-weight: 800; margin-bottom: 15px; color: #0d1b2a; display: flex; justify-content: space-between; align-items: center; }
-
-    /* Product Grid */
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
-
-    .product-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 12px; text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; transition: 0.25s ease; position: relative; }
-    .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); border-color: #cbd5e1; }
-
-    .badge-verified { background: #eaf7ef; color: #16834a; font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 4px; display: inline-block; margin-bottom: 8px; border: 1px solid #b7e4c7; width: fit-content; }
-    .product-img { width: 100%; height: 180px; object-fit: contain; background: #fafafa; border-radius: 6px; margin-bottom: 12px; padding: 5px; }
-    .product-title { font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 6px; line-height: 1.3; height: 36px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-
-    .rating { font-size: 11px; color: #f59e0b; margin-bottom: 8px; font-weight: 600; }
-    .price-container { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; }
-    .price-main { color: #e63946; font-size: 20px; font-weight: 800; }
-    .price-mrp { color: #94a3b8; text-decoration: line-through; font-size: 13px; }
-    .discount-badge { background: #e63946; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 3px; }
-
-    .free-shipping { font-size: 11px; color: #16834a; background: #f0fdf4; padding: 4px 8px; border-radius: 4px; margin-bottom: 12px; font-weight: 600; display: flex; align-items: center; gap: 4px; }
-
-    .card-actions { display: grid; grid-template-columns: 1fr; gap: 6px; }
-    .btn-view-details { background: #0d1b2a; color: #fff; text-align: center; padding: 10px; border-radius: 6px; font-weight: 700; font-size: 12px; text-decoration: none; transition: 0.2s; }
-    .btn-view-details:hover { background: #e63946; }
-
-    /* Footer */
-    footer { background: #0d1b2a; color: #cbd5e1; margin-top: 50px; padding: 40px 20px 20px 20px; font-size: 13px; }
-    .footer-content { width: min(100% - 30px, 1280px); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
-    .footer-col h4 { color: #fff; margin-bottom: 15px; font-size: 15px; }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 8px; }
-    .footer-col ul li a { color: #94a3b8; text-decoration: none; }
-    .footer-col ul li a:hover { color: #fff; }
-    .footer-bottom { text-align: center; padding-top: 25px; margin-top: 30px; border-top: 1px solid #1e293b; font-size: 12px; color: #64748b; }
-
-    /* Responsive Adjustments for Mobile */
-    @media (max-width: 850px) {
-      .layout-container { flex-direction: column; }
-      .sidebar { width: 100%; }
-      .hero-banner { flex-direction: column; text-align: center; gap: 15px; }
-      .trust-badges { grid-template-columns: 1fr; }
-      .header-actions { display: none; }
-    }
+    .section-heading { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #0d1b2a; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+    
+    .product-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; padding: 15px; text-decoration: none; color: inherit; display: block; transition: 0.2s; }
+    .product-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+    
+    .verified-badge { background: #eaf7ef; color: #16834a; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }
+    .product-image { width: 100%; height: 170px; object-fit: contain; background: #fafafa; border-radius: 6px; margin-bottom: 10px; }
+    .product-title { font-size: 15px; font-weight: bold; margin-bottom: 6px; color: #222; }
+    .rating-box { font-size: 12px; color: #f39c12; margin-bottom: 8px; }
+    .price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+    .current-price { color: #e63946; font-size: 20px; font-weight: bold; }
+    .mrp-price { color: #888; text-decoration: line-through; font-size: 13px; }
+    .discount-tag { background: #e63946; color: #fff; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 3px; }
   </style>
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
   <div class="top-bar">
-    <span>🎧 Help & Support: <a href="mailto:sewingdeosupport@gmail.com">sewingdeosupport@gmail.com</a></span>
-    <span>🚚 Free Express Shipping on orders above ₹599</span>
+    <span>🎧 Help & Support: sewingdeosupport@gmail.com</span>
+    <span>🚚 Free Shipping on orders above ₹599</span>
   </div>
 
-  <!-- Header -->
   <header>
-    <a href="index.html" class="logo-container">
-      <span class="logo-main">IK SHOP</span>
-      <span class="logo-sub">WHOLESALE</span>
-    </a>
-
-    <div class="search-box">
-      <input type="text" placeholder="Search for products, machine parts, spices...">
-      <button>Search</button>
-    </div>
-
-    <div class="header-actions">
-      <a href="#" class="action-item">👤 Account</a>
-      <a href="#" class="action-item">❤️ Wishlist</a>
-      <a href="#" class="action-item">🛒 Cart</a>
-    </div>
+    <a href="index.html" class="logo-main">IK SHOP</a>
   </header>
 
-  <!-- Nav Category Strip -->
-  <nav class="nav-strip">
-    <button class="cat-btn-main">☰ All Categories</button>
-    <ul class="nav-links">
-      <li><a href="#">Just Arrived</a></li>
-      <li><a href="#">Best Sellers</a></li>
-      <li><a href="#">Daily Deals</a></li>
-      <li><a href="#">Sewing Machine Parts</a></li>
-      <li><a href="#">Spice Variety</a></li>
-    </ul>
-  </nav>
-
-  <!-- Main Container -->
   <div class="layout-container">
-
-    <!-- Left Sidebar Categories -->
     <aside class="sidebar">
-      <div class="sidebar-header">☰ Shop By Category</div>
+      <div class="sidebar-header">☰ Categories</div>
       <ul class="category-list">
         <li><a href="#">Sewing Machine Parts <span>›</span></a></li>
         <li><a href="#">Spice Variety <span>›</span></a></li>
-        <li><a href="#">Hardware & Tools <span>›</span></a></li>
-        <li><a href="#">Home Essentials <span>›</span></a></li>
       </ul>
     </aside>
 
-    <!-- Main Content Area -->
     <main class="main-content">
-
-      <!-- Hero Banner -->
-      <div class="hero-banner">
-        <div class="hero-text">
-          <h1>WHOLESALE DIRECT PRICES</h1>
-          <p>Get genuine products at unbeatable factory prices with zero MOQ!</p>
-          <a href="#products" class="hero-btn">EXPLORE PRODUCTS</a>
-        </div>
-      </div>
-
-      <!-- Trust Badges -->
-      <div class="trust-badges">
-        <div class="badge-box"><span>🏷️</span> Lowest Wholesale Prices</div>
-        <div class="badge-box"><span>📄</span> GST Invoice Available</div>
-        <div class="badge-box"><span>⚡</span> Express Pan-India Delivery</div>
-      </div>
-
-      <!-- Products Grid -->
-      <div class="section-title" id="products">
-        <span>Featured Wholesale Products</span>
-      </div>
-
+      <div class="section-heading">Featured Wholesale Products</div>
+      
       <div class="product-grid">
 
-        <!-- Product 1: Sewing Machine Suto Stand -->
-        <div class="product-card">
-          <div>
-            <span class="badge-verified">✔ GENUINE & VERIFIED</span>
-            <img class="product-img" src="./Sewing Machine Suto Stand.jpeg" alt="Suto Stand" onerror="this.src='https://via.placeholder.com/180'">
-            <h3 class="product-title">Sewing Machine Suto Stand</h3>
-            <div class="rating">★★★★★ (5.0)</div>
-            <div class="price-container">
-              <span class="price-main">₹199.00</span>
-              <span class="price-mrp">₹349.00</span>
-              <span class="discount-badge">43% OFF</span>
-            </div>
-            <div class="free-shipping">🚚 Free Shipping Eligible</div>
+        <!-- Product 1 -->
+        <a href="product-detail.html?id=suto-stand" class="product-card">
+          <span class="verified-badge">✔ GENUINE & VERIFIED</span>
+          <img class="product-image" src="./Sewing Machine Suto Stand.jpeg" alt="Suto Stand" onerror="this.src='https://via.placeholder.com/170'">
+          <h3 class="product-title">Sewing Machine Suto Stand</h3>
+          <div class="rating-box">★★★★★ (5.0)</div>
+          <div class="price-row">
+            <span class="current-price">₹199.00</span>
+            <span class="mrp-price">₹349.00</span>
+            <span class="discount-tag">43% OFF</span>
           </div>
-          <div class="card-actions">
-            <a href="product-detail.html" class="btn-view-details">VIEW DETAILS & BUY NOW</a>
-          </div>
-        </div>
+        </a>
 
-        <!-- Product 2: Bobbin Holder -->
-        <div class="product-card">
-          <div>
-            <span class="badge-verified">✔ GENUINE & VERIFIED</span>
-            <img class="product-img" src="./bobbin-holder.jpg" alt="Bobbin Holder" onerror="this.src='https://via.placeholder.com/180'">
-            <h3 class="product-title">All Sewing Machine Bobbin Holder</h3>
-            <div class="rating">★★★★★ (5.0)</div>
-            <div class="price-container">
-              <span class="price-main">₹299.00</span>
-              <span class="price-mrp">₹499.00</span>
-              <span class="discount-badge">40% OFF</span>
-            </div>
-            <div class="free-shipping">🚚 Free Shipping Eligible</div>
+        <!-- Product 2 -->
+        <a href="product-detail.html?id=bobbin-holder" class="product-card">
+          <span class="verified-badge">✔ GENUINE & VERIFIED</span>
+          <img class="product-image" src="./bobbin-holder.jpg" alt="Bobbin Holder" onerror="this.src='https://via.placeholder.com/170'">
+          <h3 class="product-title">All Sewing Machine Bobbin Holder</h3>
+          <div class="rating-box">★★★★★ (5.0)</div>
+          <div class="price-row">
+            <span class="current-price">₹299.00</span>
+            <span class="mrp-price">₹499.00</span>
+            <span class="discount-tag">40% OFF</span>
           </div>
-          <div class="card-actions">
-            <a href="product-detail.html" class="btn-view-details">VIEW DETAILS & BUY NOW</a>
-          </div>
-        </div>
+        </a>
 
-        <!-- Product 3: Sewing Oil -->
-        <div class="product-card">
-          <div>
-            <span class="badge-verified">✔ GENUINE & VERIFIED</span>
-            <img class="product-img" src="./sewing-oil.png" alt="Sewing Machine Oil" onerror="this.src='https://via.placeholder.com/180'">
-            <h3 class="product-title">Sewing Machine Oil (High Grade)</h3>
-            <div class="rating">★★★★★ (4.9)</div>
-            <div class="price-container">
-              <span class="price-main">₹199.00</span>
-              <span class="price-mrp">₹399.00</span>
-              <span class="discount-badge">50% OFF</span>
-            </div>
-            <div class="free-shipping">🚚 Free Shipping Eligible</div>
+        <!-- Product 3 -->
+        <a href="product-detail.html?id=sewing-oil" class="product-card">
+          <span class="verified-badge">✔ GENUINE & VERIFIED</span>
+          <img class="product-image" src="./sewing-oil.png" alt="Sewing Oil" onerror="this.src='https://via.placeholder.com/170'">
+          <h3 class="product-title">Sewing Machine Oil (High Grade)</h3>
+          <div class="rating-box">★★★★★ (4.9)</div>
+          <div class="price-row">
+            <span class="current-price">₹199.00</span>
+            <span class="mrp-price">₹399.00</span>
+            <span class="discount-tag">50% OFF</span>
           </div>
-          <div class="card-actions">
-            <a href="product-detail.html" class="btn-view-details">VIEW DETAILS & BUY NOW</a>
-          </div>
-        </div>
+        </a>
 
-        <!-- Product 4: Lal Mariz Powder -->
-        <div class="product-card">
-          <div>
-            <span class="badge-verified">✔ GENUINE & VERIFIED</span>
-            <img class="product-img" src="./lal-mariz.jpg" alt="Lal Mariz Powder" onerror="this.src='https://via.placeholder.com/180'">
-            <h3 class="product-title">Premium Lal Mariz Powder</h3>
-            <div class="rating">★★★★★ (4.8)</div>
-            <div class="price-container">
-              <span class="price-main">₹99.00</span>
-              <span class="price-mrp">₹199.00</span>
-              <span class="discount-tag discount-badge">50% OFF</span>
-            </div>
-            <div class="free-shipping">🚚 Free Shipping Eligible</div>
+        <!-- Product 4 -->
+        <a href="product-detail.html?id=lal-mariz" class="product-card">
+          <span class="verified-badge">✔ GENUINE & VERIFIED</span>
+          <img class="product-image" src="./lal-mariz.jpg" alt="Lal Mariz" onerror="this.src='https://via.placeholder.com/170'">
+          <h3 class="product-title">Premium Lal Mariz Powder</h3>
+          <div class="rating-box">★★★★★ (4.8)</div>
+          <div class="price-row">
+            <span class="current-price">₹99.00</span>
+            <span class="mrp-price">₹199.00</span>
+            <span class="discount-tag">50% OFF</span>
           </div>
-          <div class="card-actions">
-            <a href="product-detail.html" class="btn-view-details">VIEW DETAILS & BUY NOW</a>
-          </div>
-        </div>
+        </a>
 
       </div>
     </main>
   </div>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-col">
-        <h4>IK SHOP WHOLESALE</h4>
-        <p style="font-size: 12px; line-height: 1.6;">India's trusted wholesale platform for sewing machine parts, spices, and daily essentials.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Help & Support</h4>
-        <ul>
-          <li><a href="#">Shipping Policy</a></li>
-          <li><a href="#">Return Policy</a></li>
-          <li><a href="#">Terms & Conditions</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      © 2026 IK Shop Wholesale. All Rights Reserved. Powered by Razorpay & Google Apps Script.
-    </div>
-  </footer>
-
 </body>
 </html>
