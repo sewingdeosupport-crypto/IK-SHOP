@@ -13,9 +13,10 @@
     .logo-main { font-size: 26px; font-weight: 900; color: #e63946; text-transform: uppercase; text-decoration: none; }
     
     .layout-container { display: flex; margin: 20px auto; width: min(100% - 30px, 1280px); gap: 20px; }
-    .sidebar { width: 240px; background: #fff; border-radius: 8px; border: 1px solid #e0e0e0; height: fit-content; }
-    .sidebar-header { background: #0d1b2a; color: #fff; padding: 12px 15px; font-weight: bold; font-size: 14px; }
+    .sidebar { width: 240px; background: #fff; border-radius: 8px; border: 1px solid #e0e0e0; height: fit-content; flex-shrink: 0; }
+    .sidebar-header { background: #0d1b2a; color: #fff; padding: 12px 15px; font-weight: bold; font-size: 14px; border-radius: 7px 7px 0 0; }
     .category-list { list-style: none; }
+    .category-list li border-bottom: 1px solid #f0f0f0; }
     .category-list li a { display: flex; justify-content: space-between; padding: 11px 15px; color: #333; text-decoration: none; font-size: 13px; font-weight: 500; }
     .category-list li a:hover { background: #fff0f1; color: #e63946; }
 
@@ -34,6 +35,11 @@
     .current-price { color: #e63946; font-size: 20px; font-weight: bold; }
     .mrp-price { color: #888; text-decoration: line-through; font-size: 13px; }
     .discount-tag { background: #e63946; color: #fff; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 3px; }
+
+    @media (max-width: 850px) {
+      .layout-container { flex-direction: column; }
+      .sidebar { width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -61,7 +67,7 @@
       
       <div class="product-grid">
 
-        <!-- Product 1 -->
+        <!-- Product 1: Suto Stand -->
         <a href="product-detail.html?id=suto-stand" class="product-card">
           <span class="verified-badge">✔ GENUINE & VERIFIED</span>
           <img class="product-image" src="./Sewing Machine Suto Stand.jpeg" alt="Suto Stand" onerror="this.src='https://via.placeholder.com/170'">
@@ -74,7 +80,7 @@
           </div>
         </a>
 
-        <!-- Product 2 -->
+        <!-- Product 2: Bobbin Holder -->
         <a href="product-detail.html?id=bobbin-holder" class="product-card">
           <span class="verified-badge">✔ GENUINE & VERIFIED</span>
           <img class="product-image" src="./bobbin-holder.jpg" alt="Bobbin Holder" onerror="this.src='https://via.placeholder.com/170'">
@@ -87,7 +93,7 @@
           </div>
         </a>
 
-        <!-- Product 3 -->
+        <!-- Product 3: Sewing Oil -->
         <a href="product-detail.html?id=sewing-oil" class="product-card">
           <span class="verified-badge">✔ GENUINE & VERIFIED</span>
           <img class="product-image" src="./sewing-oil.png" alt="Sewing Oil" onerror="this.src='https://via.placeholder.com/170'">
@@ -100,7 +106,7 @@
           </div>
         </a>
 
-        <!-- Product 4 -->
+        <!-- Product 4: Lal Mariz -->
         <a href="product-detail.html?id=lal-mariz" class="product-card">
           <span class="verified-badge">✔ GENUINE & VERIFIED</span>
           <img class="product-image" src="./lal-mariz.jpg" alt="Lal Mariz" onerror="this.src='https://via.placeholder.com/170'">
