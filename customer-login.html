@@ -31,7 +31,7 @@
 <div id="status" class="status" role="status" aria-live="polite"></div>
 <div class="tabs"><button class="tab active" id="phoneTab" type="button">Mobile OTP</button><button class="tab" id="emailTab" type="button">Email sign-in</button></div>
 <div id="phonePane">
-<div class="field"><label for="phone">Mobile number with country code</label><input id="phone" type="tel" placeholder="+91 98765 43210" autocomplete="tel"><p class="hint">Enter your full number with country code, e.g. +91 for India.</p></div>
+<div class="field"><label for="phone">Indian mobile number</label><input id="phone" type="tel" inputmode="numeric" placeholder="98765 43210" autocomplete="tel-national" maxlength="16"><p class="hint">Enter your 10-digit mobile number. India +91 is added automatically.</p></div>
 <div id="recaptcha-container"></div>
 <button class="primary" id="sendPhone" type="button">SEND SMS CODE</button>
 <div id="phoneCodeArea" style="display:none;margin-top:16px"><div class="field"><label for="phoneCode">6-digit verification code</label><input id="phoneCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="Enter SMS code"></div><button class="primary" id="verifyPhone" type="button">VERIFY & SIGN IN</button></div>
@@ -140,13 +140,18 @@ function initializeFirebase() {
   return true;
 }
 $("sendPhone").addEventListener("click", async () => {
-  if (!auth && !initializeFirebase()) return;
-  const phone = $("phone").value.trim();
-  if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-    showStatus("Enter a valid phone number with country code, such as +91 9876543210.", "error"); return;
+  const enteredPhone = $("phone").value.trim().replace(/[\\s()-]/g, "");
+  let phone = enteredPhone;
+  if (/^\\d{10}$/.test(enteredPhone)) phone = "+91" + enteredPhone;
+  else if (/^91\\d{10}$/.test(enteredPhone)) phone = "+" + enteredPhone;
+  if (!/^\\+[1-9]\\d{7,14}$/.test(phone)) {
+    showStatus("Enter your 10-digit Indian mobile number. +91 will be added automatically.", "error"); return;
   }
+  $("phone").value = phone;
+  if (!auth && !initializeFirebase()) return;
   try {
     $("sendPhone").disabled = true;
+    showStatus("Preparing secure verification…", "info");
     if (!recaptchaVerifier) {
       recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {size:"normal"});
       await recaptchaVerifier.render();
@@ -155,7 +160,7 @@ $("sendPhone").addEventListener("click", async () => {
     $("phoneCodeArea").style.display = "block";
     showStatus("SMS code sent. Enter the 6-digit code to continue.", "success");
   } catch (err) {
-    showStatus("Could not send SMS: " + err.message + ". Check Firebase Phone sign-in, authorized domain, and SMS settings.", "error");
+    showStatus("Could not send SMS: " + (err && err.message ? err.message : String(err)) + ". Check Firebase Phone sign-in, authorized domain, reCAPTCHA and SMS quota.", "error");
     if (recaptchaVerifier) { try { await recaptchaVerifier.clear(); } catch (_) {} recaptchaVerifier = null; }
   } finally { $("sendPhone").disabled = false; }
 });
