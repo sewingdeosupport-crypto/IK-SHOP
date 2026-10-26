@@ -84,10 +84,13 @@ service cloud.firestore {
 /* Paste the public Firebase Web App config from Firebase Console here.
    Firebase web config is not a service-account secret. Protect data with Auth and Firestore rules. */
 const firebaseConfig = {
-  apiKey: "PASTE_FIREBASE_API_KEY",
-  authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-  projectId: "PASTE_PROJECT_ID",
-  appId: "PASTE_FIREBASE_APP_ID"
+  apiKey: "AIzaSyBGaWWfNax1my5N1mpOnuPddz4zLWrpy3c",
+  authDomain: "ik-shop-bb018.firebaseapp.com",
+  projectId: "ik-shop-bb018",
+  storageBucket: "ik-shop-bb018.firebasestorage.app",
+  messagingSenderId: "777166794229",
+  appId: "1:777166794229:web:0b2a19b9bf395adb6f04bc",
+  measurementId: "G-5S7WRBJPQJ"
 };
 let auth = null, db = null, confirmationResult = null, recaptchaVerifier = null;
 const $ = id => document.getElementById(id);
