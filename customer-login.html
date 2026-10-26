@@ -140,11 +140,11 @@ function initializeFirebase() {
   return true;
 }
 $("sendPhone").addEventListener("click", async () => {
-  const enteredPhone = $("phone").value.trim().replace(/[\\s()-]/g, "");
+  const enteredPhone = $("phone").value.trim().replace(/[\s()-]/g, "");
   let phone = enteredPhone;
-  if (/^\\d{10}$/.test(enteredPhone)) phone = "+91" + enteredPhone;
-  else if (/^91\\d{10}$/.test(enteredPhone)) phone = "+" + enteredPhone;
-  if (!/^\\+[1-9]\\d{7,14}$/.test(phone)) {
+  if (/^\d{10}$/.test(enteredPhone)) phone = "+91" + enteredPhone;
+  else if (/^91\d{10}$/.test(enteredPhone)) phone = "+" + enteredPhone;
+  if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
     showStatus("Enter your 10-digit Indian mobile number. +91 will be added automatically.", "error"); return;
   }
   $("phone").value = phone;
