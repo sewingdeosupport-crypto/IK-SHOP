@@ -258,8 +258,15 @@
     document.getElementById("pTitle").innerText = currentProd.title;
     document.getElementById("pSku").innerText = currentProd.sku;
     document.getElementById("pPrice").innerText = "₹" + currentProd.price + ".00";
-    document.getElementById("pMrp").innerText = "₹" + currentProd.mrp + ".00";
-    document.getElementById("pDiscount").innerText = currentProd.discount;
+    const mrpElement = document.getElementById("pMrp");
+    const discountElement = document.getElementById("pDiscount");
+    const discountPercent = currentProd.mrp > currentProd.price
+      ? Math.round(((currentProd.mrp - currentProd.price) / currentProd.mrp) * 100)
+      : 0;
+    mrpElement.innerText = "₹" + currentProd.mrp + ".00";
+    discountElement.innerText = discountPercent > 0 ? discountPercent + "% OFF" : "";
+    mrpElement.style.display = discountPercent > 0 ? "inline" : "none";
+    discountElement.style.display = discountPercent > 0 ? "inline-block" : "none";
     document.getElementById("mainImage").src = currentProd.images[0];
 
     document.getElementById("prodName").value = currentProd.title;
