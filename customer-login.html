@@ -120,6 +120,7 @@ $("googleSignIn").addEventListener("click", async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     provider.setCustomParameters({ prompt: "select_account" });
     await auth.signInWithPopup(provider);
+    if (!new URLSearchParams(window.location.search).has("stay")) { window.location.replace("index.html"); return; }
     showStatus("Google sign-in successful.", "success");
   } catch (err) {
     const code = err && err.code ? err.code : "";
@@ -149,8 +150,13 @@ function initializeFirebase() {
     if (err && err.code && err.code !== "auth/popup-closed-by-user") showStatus("Google sign-in failed: " + err.message, "error");
   });
   auth.onAuthStateChanged(user => {
-    if (user) showAccount(user);
-    else { $("accountPanel").classList.remove("show"); $("loginPanel").style.display = "block"; }
+    if (user) {
+      if (!new URLSearchParams(window.location.search).has("stay")) {
+        window.location.replace("index.html");
+        return;
+      }
+      showAccount(user);
+    } else { $("accountPanel").classList.remove("show"); $("loginPanel").style.display = "block"; }
   });
   const url = window.location.href;
   if (auth.isSignInWithEmailLink(url)) {
@@ -158,7 +164,8 @@ function initializeFirebase() {
     if (!email) email = window.prompt("Please confirm the email address where you received the sign-in link:");
     if (email) auth.signInWithEmailLink(email, url).then(() => {
       window.localStorage.removeItem("ikShopEmailForSignIn");
-      window.history.replaceState({}, document.title, window.location.pathname);
+      if (!new URLSearchParams(window.location.search).has("stay")) { window.location.replace("index.html"); return; }
+      window.history.replaceState({}, document.title, window.location.pathname + "?stay");
       showStatus("Email verified. You are signed in.", "success");
     }).catch(err => showStatus("Could not verify email link: " + err.message, "error"));
   }
@@ -193,7 +200,7 @@ $("verifyPhone").addEventListener("click", async () => {
   if (!confirmationResult) { showStatus("Request an SMS code first.", "error"); return; }
   const code = $("phoneCode").value.trim();
   if (!/^\d{6}$/.test(code)) { showStatus("Enter the 6-digit code.", "error"); return; }
-  try { await confirmationResult.confirm(code); showStatus("Phone verified. Signed in successfully.", "success"); }
+  try { await confirmationResult.confirm(code); if (!new URLSearchParams(window.location.search).has("stay")) { window.location.replace("index.html"); return; } showStatus("Phone verified. Signed in successfully.", "success"); }
   catch (err) { showStatus("Code verification failed: " + err.message, "error"); }
 });
 $("sendEmail").addEventListener("click", async () => {
