@@ -320,7 +320,12 @@
       {id:"lal-mariz",title:"Premium Lal Mariz Powder",price:99,image:"./lal-mariz.jpg"},
       {id:"organ-needle-1",title:"ORGAN Needles (DBx1)",price:119,image:"./organ-needle.jpg"},
       {id:"white-crane-1",title:"White Crane Industrial Needles",price:55,image:"./white-crane-needle.jpg"},
-      {id:"rotary-hook-1",title:"Pilyselect Rotary Hook",price:599,image:"./pilyselect-rotary-hook.jpg"}
+      {id:"rotary-hook-1",title:"Pilyselect Rotary Hook",price:599,image:"./pilyselect-rotary-hook.jpg"},
+      {id:"ik-sp-001",title:"PI LYSELECT T3 Sewing Machine Presser Foot",price:220,image:"./PILYSELECT%20T3%20Presser%20Foot%20Showcase.png"},
+      {id:"ik-sp-002",title:"Sewing Machine Adjuster Bolt",price:110,image:"./IK%20Shop%20Adjuster%20Bolt%20Banner.png"},
+      {id:"ik-sp-003",title:"Peak Sewing Machine Bobbin Winder",price:249,image:"./IK%20Shop%20Bobbin%20Winder%20Showcase.png"},
+      {id:"ik-sp-004",title:"GAJ Sewing Machine Needle Plate",price:129,image:"./GAJ%20Needle%20Plate%20Sewing%20Accessory%20Banner.png"},
+      {id:"ik-sp-005",title:"ORLAND Needle Plate",price:129,image:"https://placehold.co/400x300/f6f7fb/101b43?text=ORLAND+Needle+Plate"}
     ];
     const relatedGrid = document.getElementById("relatedGrid");
     relatedProducts.forEach(function(p) {
@@ -373,8 +378,7 @@
     refreshSelectedPrice();
     document.getElementById("mainImage").src = currentProd.images[0];
 
-    document.getElementById("prodName").value = currentProd.title;
-    document.getElementById("prodPrice").value = "₹" + (currentProd.price * selectedQuantity) + ".00";
+    refreshSelectedPrice();
 
     const thumbList = document.getElementById("thumbList");
     thumbList.innerHTML = "";
