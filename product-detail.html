@@ -104,6 +104,7 @@
         <span class="discount-tag" id="pDiscount">0% OFF</span>
       </div>
 
+      <div id="packSelector" style="margin:14px 0 8px;display:none"><label for="packChoice" style="display:block;font-size:13px;font-weight:800;color:#101b43;margin-bottom:7px">Choose Pack</label><select id="packChoice" style="width:100%;padding:12px;border:1px solid #e8a9c2;border-radius:8px;background:#fff0f6;color:#101b43;font-weight:700" onchange="changePack(this.value)"></select></div>
       <div class="quantity-wrap">
         <span>Quantity</span>
         <div class="quantity-control">
@@ -248,9 +249,68 @@
         price: 1049, mrp: 1049, discount: "",
         sku: "SKU: ik_pilyselect_hook_02",
         images: ["./pilyselect-rotary-hook.jpg"]
+      },
+      "ik-sp-001": {
+        title: "PI LYSELECT T3 Sewing Machine Presser Foot",
+        price: 220,
+        mrp: 269,
+        sku: "Product Code: IK-SP-001",
+        description: "Suitable for all sewing machines.",
+        images: ["PILYSELECT%20T3%20Presser%20Foot%20Showcase.png"],
+        variants: [
+          {label:"1 Piece",price:220,mrp:269,cartId:"ik-sp-001-1p"},
+          {label:"5 Pieces",price:689,mrp:null,cartId:"ik-sp-001-5p"}
+        ]
+      },
+      "ik-sp-002": {
+        title: "Sewing Machine Adjuster Bolt",
+        price: 110,
+        mrp: 150,
+        sku: "Product Code: IK-SP-002",
+        description: "Sewing machine adjuster bolt for all sewing machines.",
+        images: ["IK%20Shop%20Adjuster%20Bolt%20Banner.png"],
+        variants: [
+          {label:"1 Piece",price:110,mrp:150,cartId:"ik-sp-002-1p"},
+          {label:"5 Pieces",price:189,mrp:null,cartId:"ik-sp-002-5p"}
+        ]
+      },
+      "ik-sp-003": {
+        title: "Peak Sewing Machine Bobbin Winder",
+        price: 249,
+        mrp: 350,
+        sku: "Product Code: IK-SP-003",
+        description: "Bobbin winder compatible with Jack and Juki sewing machines.",
+        images: ["IK%20Shop%20Bobbin%20Winder%20Showcase.png"],
+        variants: [
+          {label:"1 Piece",price:249,mrp:350,cartId:"ik-sp-003-1p"},
+          {label:"5 Pieces",price:889,mrp:null,cartId:"ik-sp-003-5p"}
+        ]
+      },
+      "ik-sp-004": {
+        title: "GAJ Sewing Machine Needle Plate",
+        price: 129,
+        mrp: 200,
+        sku: "Product Code: IK-SP-004",
+        description: "For Jack and Juki sewing machines. Available types: FD 16, 18, 20, 22, 24, 26; E 16, 18, 20, 22, 24, 26; B 16, 18, 20, 22, 24, 26.",
+        images: ["GAJ%20Needle%20Plate%20Sewing%20Accessory%20Banner.png"],
+        variants: [
+          {label:"1 Piece",price:129,mrp:200,cartId:"ik-sp-004-1p"},
+          {label:"5 Pieces",price:289,mrp:null,cartId:"ik-sp-004-5p"}
+        ]
+      },
+      "ik-sp-005": {
+        title: "ORLAND Needle Plate",
+        price: 129,
+        mrp: 200,
+        sku: "Product Code: IK-SP-005",
+        description: "Available types: FD 16, 18, 20, 22, 24, 26; E 16, 18, 20, 22, 24, 26; B 16, 18, 20, 22, 24, 26.",
+        images: ["https://placehold.co/600x450/f6f7fb/101b43?text=ORLAND+Needle+Plate"],
+        variants: [
+          {label:"1 Piece",price:129,mrp:200,cartId:"ik-sp-005-1p"},
+          {label:"5 Pieces",price:289,mrp:null,cartId:"ik-sp-005-5p"}
+        ]
       }
     };
-
 
     const relatedProducts = [
       {id:"suto-stand",title:"Sewing Machine Suto Stand",price:199,image:"./Sewing%20Machine%20Suto%20Stand.jpeg"},
@@ -278,26 +338,39 @@
     const productId = urlParams.get('id') || "suto-stand";
     const currentProd = productsDB[productId] || productsDB["suto-stand"];
     let selectedQuantity = 1;
+    let selectedVariant = currentProd.variants ? currentProd.variants[0] : {label:"1 Piece",price:currentProd.price,mrp:currentProd.mrp,cartId:productId};
+    function refreshSelectedPrice() {
+      document.getElementById("pPrice").innerText = "₹" + selectedVariant.price + ".00";
+      const m = selectedVariant.mrp;
+      const pct = m && m > selectedVariant.price ? Math.round(((m-selectedVariant.price)/m)*100) : 0;
+      document.getElementById("pMrp").innerText = m ? "₹" + m + ".00" : "";
+      document.getElementById("pMrp").style.display = pct ? "inline" : "none";
+      document.getElementById("pDiscount").innerText = pct ? pct + "% OFF" : "";
+      document.getElementById("pDiscount").style.display = pct ? "inline-block" : "none";
+      document.getElementById("prodPrice").value = "₹" + (selectedVariant.price * selectedQuantity) + ".00";
+      document.getElementById("prodName").value = currentProd.title + " (" + selectedVariant.label + ")";
+    }
+    function changePack(index) {
+      selectedVariant = currentProd.variants[Number(index)] || currentProd.variants[0];
+      selectedQuantity = 1;
+      document.getElementById("quantityValue").textContent = "1";
+      refreshSelectedPrice();
+    }
     function changeQuantity(amount) {
       selectedQuantity = Math.max(1, Math.min(99, selectedQuantity + amount));
       document.getElementById("quantityValue").textContent = selectedQuantity;
-      document.getElementById("prodPrice").value = "₹" + (currentProd.price * selectedQuantity) + ".00";
+      refreshSelectedPrice();
     }
     document.getElementById("productDescription").textContent =
-      currentProd.description || (currentProd.title + ". Please check the product name, price and product code before placing your order. Contact IK Shop for further product information.");
+      currentProd.description || (currentProd.title + ". Please contact IK Shop for further product information.");
+    if (currentProd.variants) {
+      document.getElementById("packSelector").style.display = "block";
+      document.getElementById("packChoice").innerHTML = currentProd.variants.map((v,i)=>'<option value="'+i+'">'+v.label+' — ₹'+v.price+'</option>').join("");
+    }
 
     document.getElementById("pTitle").innerText = currentProd.title;
     document.getElementById("pSku").innerText = currentProd.sku;
-    document.getElementById("pPrice").innerText = "₹" + currentProd.price + ".00";
-    const mrpElement = document.getElementById("pMrp");
-    const discountElement = document.getElementById("pDiscount");
-    const discountPercent = currentProd.mrp > currentProd.price
-      ? Math.round(((currentProd.mrp - currentProd.price) / currentProd.mrp) * 100)
-      : 0;
-    mrpElement.innerText = "₹" + currentProd.mrp + ".00";
-    discountElement.innerText = discountPercent > 0 ? discountPercent + "% OFF" : "";
-    mrpElement.style.display = discountPercent > 0 ? "inline" : "none";
-    discountElement.style.display = discountPercent > 0 ? "inline-block" : "none";
+    refreshSelectedPrice();
     document.getElementById("mainImage").src = currentProd.images[0];
 
     document.getElementById("prodName").value = currentProd.title;
@@ -330,7 +403,7 @@
 
     function addCurrentProductToCart() {
       try {
-        const cartProductId = productId === "bobbin-case" ? "bobbin-case-1" : productId;
+        const cartProductId = currentProd.variants ? selectedVariant.cartId : (productId === "bobbin-case" ? "bobbin-case-1" : productId);
         const cart = JSON.parse(localStorage.getItem(detailCartKey) || "[]");
         const item = cart.find(entry => entry.id === cartProductId);
         if (item) item.qty += selectedQuantity;
@@ -365,13 +438,13 @@
       if (payMethod === "Online Payment") {
         var options = {
           "key": "rzp_live_TrppjNfmdmkJLQ", 
-          "amount": currentProd.price * selectedQuantity * 100, 
+          "amount": selectedVariant.price * selectedQuantity * 100, 
           "currency": "INR",
           "name": "IK SHOP",
           "description": currentProd.title,
           "handler": async function (response){
             alert("✅ Payment Successful! Payment ID: " + response.razorpay_payment_id);
-            await saveOrderToSheet(currentProd.title + " x " + selectedQuantity, "₹" + (currentProd.price * selectedQuantity), name, phone, address, "Online Paid (" + response.razorpay_payment_id + ")");
+            await saveOrderToSheet(currentProd.title + " (" + selectedVariant.label + ") x " + selectedQuantity, "₹" + (selectedVariant.price * selectedQuantity), name, phone, address, "Online Paid (" + response.razorpay_payment_id + ")");
           },
           "prefill": { "name": name, "contact": phone },
           "theme": { "color": "#f04483" }
@@ -379,7 +452,7 @@
         var rzp1 = new Razorpay(options);
         rzp1.open();
       } else {
-        await saveOrderToSheet(currentProd.title + " x " + selectedQuantity, "₹" + (currentProd.price * selectedQuantity), name, phone, address, "Cash on Delivery");
+        await saveOrderToSheet(currentProd.title + " (" + selectedVariant.label + ") x " + selectedQuantity, "₹" + (selectedVariant.price * selectedQuantity), name, phone, address, "Cash on Delivery");
         alert("✅ Order placed successfully via COD!");
       }
     });
