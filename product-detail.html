@@ -193,7 +193,11 @@
         mrp: 89,
         discount: "",
         sku: "SKU: ik_bobbin_case_05",
-        images: ["./bobbin-case-poster.png", "./bobbin-holder.jpg"]
+        images: ["./bobbin-case-poster.png", "./bobbin-holder.jpg"],
+        variants: [
+          {label:"1 Piece",price:89,mrp:null,cartId:"bobbin-case-1"},
+          {label:"Pack of 6 Pieces",price:339,mrp:null,cartId:"bobbin-case-6"}
+        ]
       },
       "bobbin-holder": {
         title: "All Sewing Machine Bobbin Holder",
@@ -220,40 +224,68 @@
         images: ["./lal-mariz.jpg"]
       },
       "organ-needle-1": {
-        title: "ORGAN Needles (DBx1) - 1 Piece",
+        title: "ORGAN Needles (DBx1)",
         price: 119, mrp: 119, discount: "",
-        sku: "SKU: ik_organ_dbx1_01",
-        images: ["./organ-needle.jpg"]
+        sku: "SKU: ik_organ_dbx1",
+        description: "ORGAN industrial sewing machine needles, DBx1 system. Select needle size and machine model before ordering.",
+        images: ["./organ-needle.jpg"],
+        variants: [
+          {label:"1 Piece",price:119,mrp:null,cartId:"organ-needle-1"},
+          {label:"5 Pieces",price:449,mrp:null,cartId:"organ-needle-5"}
+        ]
       },
       "organ-needle-5": {
-        title: "ORGAN Needles (DBx1) - 5 Pieces",
+        title: "ORGAN Needles (DBx1)",
         price: 449, mrp: 449, discount: "",
-        sku: "SKU: ik_organ_dbx1_05",
-        images: ["./organ-needle.jpg"]
+        sku: "SKU: ik_organ_dbx1",
+        description: "ORGAN industrial sewing machine needles, DBx1 system. Select needle size and machine model before ordering.",
+        images: ["./organ-needle.jpg"],
+        variants: [
+          {label:"1 Piece",price:119,mrp:null,cartId:"organ-needle-1"},
+          {label:"5 Pieces",price:449,mrp:null,cartId:"organ-needle-5"}
+        ]
       },
       "white-crane-1": {
-        title: "White Crane Industrial Needles - 1 Pack (10 pcs)",
+        title: "White Crane Industrial Needles",
         price: 55, mrp: 55, discount: "",
-        sku: "SKU: ik_white_crane_10",
-        images: ["./white-crane-needle.jpg"]
+        sku: "SKU: ik_white_crane",
+        description: "White Crane industrial sewing machine needles. Each pack contains 10 pieces.",
+        images: ["./white-crane-needle.jpg"],
+        variants: [
+          {label:"1 Pack (10 pcs)",price:55,mrp:null,cartId:"white-crane-1"},
+          {label:"10 Packs (100 pcs)",price:500,mrp:null,cartId:"white-crane-10"}
+        ]
       },
       "white-crane-10": {
-        title: "White Crane Industrial Needles - 10 Packs (100 pcs)",
+        title: "White Crane Industrial Needles",
         price: 500, mrp: 500, discount: "",
-        sku: "SKU: ik_white_crane_100",
-        images: ["./white-crane-needle.jpg"]
+        sku: "SKU: ik_white_crane",
+        description: "White Crane industrial sewing machine needles. Each pack contains 10 pieces.",
+        images: ["./white-crane-needle.jpg"],
+        variants: [
+          {label:"1 Pack (10 pcs)",price:55,mrp:null,cartId:"white-crane-1"},
+          {label:"10 Packs (100 pcs)",price:500,mrp:null,cartId:"white-crane-10"}
+        ]
       },
       "rotary-hook-1": {
-        title: "Pilyselect Rotary Hook - 1 Piece",
+        title: "Pilyselect Rotary Hook",
         price: 599, mrp: 599, discount: "",
-        sku: "SKU: ik_pilyselect_hook_01",
-        images: ["./pilyselect-rotary-hook.jpg"]
+        sku: "SKU: ik_pilyselect_hook",
+        images: ["./pilyselect-rotary-hook.jpg"],
+        variants: [
+          {label:"1 Piece",price:599,mrp:null,cartId:"rotary-hook-1"},
+          {label:"2 Pieces",price:1049,mrp:null,cartId:"rotary-hook-2"}
+        ]
       },
       "rotary-hook-2": {
-        title: "Pilyselect Rotary Hook - 2 Pieces",
+        title: "Pilyselect Rotary Hook",
         price: 1049, mrp: 1049, discount: "",
-        sku: "SKU: ik_pilyselect_hook_02",
-        images: ["./pilyselect-rotary-hook.jpg"]
+        sku: "SKU: ik_pilyselect_hook",
+        images: ["./pilyselect-rotary-hook.jpg"],
+        variants: [
+          {label:"1 Piece",price:599,mrp:null,cartId:"rotary-hook-1"},
+          {label:"2 Pieces",price:1049,mrp:null,cartId:"rotary-hook-2"}
+        ]
       },
       "ik-sp-001": {
         title: "PI LYSELECT T3 Sewing Machine Presser Foot",
@@ -348,7 +380,8 @@
     const productId = urlParams.get('id') || "suto-stand";
     const currentProd = productsDB[productId] || productsDB["suto-stand"];
     let selectedQuantity = 1;
-    let selectedVariant = currentProd.variants ? currentProd.variants[0] : {label:"1 Piece",price:currentProd.price,mrp:currentProd.mrp,cartId:productId};
+    const preferredVariantIndex = (productId === "organ-needle-5" || productId === "white-crane-10" || productId === "rotary-hook-2") ? 1 : 0;
+    let selectedVariant = currentProd.variants ? (currentProd.variants[preferredVariantIndex] || currentProd.variants[0]) : {label:"1 Piece",price:currentProd.price,mrp:currentProd.mrp,cartId:productId};
     function refreshSelectedPrice() {
       document.getElementById("pPrice").innerText = "₹" + selectedVariant.price + ".00";
       const m = selectedVariant.mrp;
@@ -376,6 +409,7 @@
     if (currentProd.variants) {
       document.getElementById("packSelector").style.display = "block";
       document.getElementById("packChoice").innerHTML = currentProd.variants.map((v,i)=>'<option value="'+i+'">'+v.label+' — ₹'+v.price+'</option>').join("");
+      document.getElementById("packChoice").value = String(preferredVariantIndex);
     }
 
     document.getElementById("pTitle").innerText = currentProd.title;
@@ -410,7 +444,7 @@
       console.warn("Cart account sync unavailable; using guest cart.", authError);
     }
 
-    const hasNeedleOptions = productId === "white-crane-1" || productId === "white-crane-10";
+    const hasNeedleOptions = productId === "white-crane-1" || productId === "white-crane-10" || productId === "organ-needle-1" || productId === "organ-needle-5";
     if (hasNeedleOptions) document.getElementById("needleOptions").style.display = "grid";
     function getNeedleChoices() {
       if (!hasNeedleOptions) return null;
