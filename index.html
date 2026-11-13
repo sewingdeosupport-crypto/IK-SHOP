@@ -19,6 +19,15 @@
 .add,.view,.btn,.head-btn,.chip{transition:transform .22s ease,background-color .22s ease,box-shadow .22s ease}.add:active,.view:active,.btn:active,.head-btn:active,.chip:active{transform:scale(.96)}
 .toast.show{animation:ikFadeUp .3s both}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.js-reveal{opacity:1;transform:none}}
+
+/* Stronger, immediately visible entrance motion */
+@keyframes ikCardEnter{0%{opacity:0;transform:translateY(38px) scale(.97)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes ikHeroEnter{0%{opacity:0;transform:translateY(28px) scale(.985)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.hero{animation:ikHeroEnter .9s cubic-bezier(.16,1,.3,1) both}
+.section-head{animation:ikFadeUp .7s .12s both}
+.card{animation:ikCardEnter .72s cubic-bezier(.16,1,.3,1) both}
+.card:nth-child(1){animation-delay:.08s}.card:nth-child(2){animation-delay:.16s}.card:nth-child(3){animation-delay:.24s}.card:nth-child(4){animation-delay:.32s}.card:nth-child(5){animation-delay:.40s}.card:nth-child(6){animation-delay:.48s}.card:nth-child(7){animation-delay:.56s}.card:nth-child(8){animation-delay:.64s}
+.banner{animation:ikFadeUp .8s .2s both}
 </style></head><body>
 <div class="top">✦ Welcome to <b>IK Shop</b> — your everyday wholesale partner <span>☎ sewingdeosupport@gmail.com &nbsp; • &nbsp; Shipping details at checkout</span></div>
 <header><div class="head"><a class="brand" href="index.html">IK<span>SHOP</span><small>WHOLESALE & ESSENTIALS</small></a><form class="search" id="searchForm"><input id="searchInput" type="search" placeholder="Search sewing parts, oil, spices..." aria-label="Search products"><button>⌕ Search</button></form><a class="head-btn" id="loginButton" href="customer-login.html?stay">👤 Login</a>
