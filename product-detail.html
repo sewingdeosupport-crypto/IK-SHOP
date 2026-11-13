@@ -95,11 +95,22 @@
 .option-selectors,.form-group{animation:ikFadeUp .6s .52s both}
 .quantity-wrap{animation:ikFadeUp .6s .58s both}
 .action-buttons{animation:ikFadeUp .6s .64s both}
+
+/* IK Shop branded toast notifications - no browser alert popups */
+.ik-toast-wrap{position:fixed;top:18px;left:50%;transform:translateX(-50%);width:min(92vw,390px);z-index:3000;pointer-events:none}
+.ik-toast{display:flex;align-items:center;gap:12px;background:#0d1b2a;color:#fff;border:1px solid rgba(240,68,131,.55);border-left:5px solid #f04483;border-radius:14px;padding:14px 15px;box-shadow:0 12px 35px rgba(13,27,42,.24);opacity:0;transform:translateY(-18px) scale(.97);transition:opacity .28s ease,transform .28s ease;pointer-events:auto}
+.ik-toast.show{opacity:1;transform:translateY(0) scale(1)}
+.ik-toast-icon{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border-radius:50%;background:#e8fff2;color:#11834b;font-size:21px;font-weight:900}
+.ik-toast-copy{flex:1;min-width:0}.ik-toast-title{font-size:14px;font-weight:800;margin-bottom:3px}.ik-toast-message{font-size:12px;line-height:1.45;color:#e6eaf0;overflow-wrap:anywhere}
+.ik-toast-close{border:0;background:transparent;color:#ffb4d0;font-size:22px;padding:3px 5px;cursor:pointer}
+@media(prefers-reduced-motion:reduce){.ik-toast{transition:none}}
 </style>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 </head>
 <body>
+  <div class="ik-toast-wrap" aria-live="polite" aria-atomic="true"><div class="ik-toast" id="ikToast" role="status"><span class="ik-toast-icon" id="ikToastIcon">✓</span><div class="ik-toast-copy"><div class="ik-toast-title" id="ikToastTitle">IK Shop</div><div class="ik-toast-message" id="ikToastMessage"></div></div><button class="ik-toast-close" type="button" aria-label="Close notification" onclick="hideIkToast()">×</button></div></div>
+
 
   <header>
     <a href="index.html" class="logo-main">IK SHOP</a>
@@ -202,6 +213,22 @@
   </div>
 
   <script>
+
+    let ikToastTimer;
+    function showIkToast(message, title = "Added to Cart", icon = "✓") {
+      const toast = document.getElementById("ikToast");
+      document.getElementById("ikToastTitle").textContent = title;
+      document.getElementById("ikToastMessage").textContent = message;
+      document.getElementById("ikToastIcon").textContent = icon;
+      toast.classList.add("show");
+      clearTimeout(ikToastTimer);
+      ikToastTimer = setTimeout(hideIkToast, 3200);
+    }
+    function hideIkToast() {
+      const toast = document.getElementById("ikToast");
+      if (toast) toast.classList.remove("show");
+    }
+
     const productsDB = {
       "suto-stand": {
         title: "Sewing Machine Suto Stand",
@@ -482,7 +509,7 @@
       const size = document.getElementById("needleSize").value;
       const model = document.getElementById("needleModel").value;
       if (!size || !model) {
-        alert("Please select both Size and Model.");
+        showIkToast("Please select both Size and Model before continuing.", "Selection Required", "!");
         return false;
       }
       return { size, model };
@@ -498,10 +525,10 @@
         if (item) item.qty += selectedQuantity;
         else cart.push({ id: cartProductId, qty: selectedQuantity, ...(choices || {}) });
         localStorage.setItem(detailCartKey, JSON.stringify(cart));
-        alert("Added to your cart: " + currentProd.title);
+        showIkToast(currentProd.title + " has been added to your cart.", "Added to Cart", "✓");
       } catch (error) {
         console.error("Add to cart failed:", error);
-        alert("Could not update cart. Please refresh the page and try again.");
+        showIkToast("Could not update cart. Please refresh the page and try again.", "Cart Error", "!");
       }
     }
 
@@ -535,7 +562,7 @@
           "name": "IK SHOP",
           "description": currentProd.title,
           "handler": async function (response){
-            alert("✅ Payment Successful! Payment ID: " + response.razorpay_payment_id);
+            showIkToast("Payment successful. ID: " + response.razorpay_payment_id, "Payment Successful", "✓");
             const choices = getNeedleChoices();
             await saveOrderToSheet(currentProd.title + " (" + selectedVariant.label + ")" + (choices ? " | Size: " + choices.size + " | Model: " + choices.model : "") + " x " + selectedQuantity, "₹" + (selectedVariant.price * selectedQuantity), name, phone, address, "Online Paid (" + response.razorpay_payment_id + ")");
           },
@@ -547,7 +574,7 @@
       } else {
         const choices = getNeedleChoices();
         await saveOrderToSheet(currentProd.title + " (" + selectedVariant.label + ")" + (choices ? " | Size: " + choices.size + " | Model: " + choices.model : "") + " x " + selectedQuantity, "₹" + (selectedVariant.price * selectedQuantity), name, phone, address, "Cash on Delivery");
-        alert("✅ Order placed successfully via COD!");
+        showIkToast("Your Cash on Delivery order has been placed.", "Order Placed", "✓");
       }
     });
 
