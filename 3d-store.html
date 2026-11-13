@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d1b2a"><title>IK Shop | 3D Virtual Store</title>
+<style>
+:root{--navy:#0d1b2a;--pink:#f04483;--ink:#152238;--muted:#657184;--paper:#f5f7fb}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+header{height:64px;padding:0 clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;background:var(--navy);color:#fff}
+.brand{font-size:21px;font-weight:900}.brand span{color:var(--pink)}header a{color:#fff;text-decoration:none;font-size:13px}
+.layout{width:min(1160px,94%);margin:28px auto;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(270px,.8fr);gap:20px}
+.stage,.details{background:#fff;border-radius:20px;box-shadow:0 12px 34px #0d1b2a14;overflow:hidden}
+.stage{position:relative;min-height:520px;background:radial-gradient(ellipse at 50% 40%,#263d58,#0d1b2a 68%);color:#fff}
+#webgl-canvas{display:block;width:100%;height:520px;touch-action:pan-y}
+.stage-label{position:absolute;top:20px;left:22px;z-index:2;pointer-events:none}.stage-label small{display:block;color:#ffc1d9;letter-spacing:2px;font-weight:700;font-size:10px}.stage-label strong{font-size:20px}
+.stage-hint{position:absolute;bottom:18px;left:0;right:0;text-align:center;color:#e1e8f2;font-size:12px;pointer-events:none}
+.details{padding:26px}.eyebrow{color:var(--pink);font-size:11px;font-weight:900;letter-spacing:1.5px}
+h1{font-size:27px;line-height:1.15;margin:9px 0 8px;color:var(--navy)}.sub{font-size:13px;line-height:1.6;color:var(--muted)}
+.price{font-size:29px;font-weight:900;color:var(--pink);margin:18px 0}.price small{font-size:12px;color:var(--muted);font-weight:500}
+.choices{display:grid;gap:10px;margin:18px 0}.choice{width:100%;padding:13px 14px;text-align:left;border:1px solid #dce2eb;border-radius:12px;background:#fff;color:var(--navy);font-weight:700;cursor:pointer;transition:.2s}
+.choice:hover{border-color:var(--pink);transform:translateY(-2px)}.choice.active{border:2px solid var(--pink);background:#fff1f6}
+.action{display:flex;justify-content:center;align-items:center;width:100%;padding:14px;border:0;border-radius:12px;background:var(--pink);color:#fff;font-size:14px;font-weight:900;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.action:hover{transform:translateY(-2px);box-shadow:0 8px 20px #f0448344}.note{margin-top:13px;font-size:11px;color:var(--muted);line-height:1.5}
+#toast{position:fixed;top:16px;left:50%;transform:translate(-50%,-18px);opacity:0;z-index:5;background:var(--navy);color:#fff;border-left:4px solid var(--pink);border-radius:12px;padding:13px 18px;box-shadow:0 10px 28px #0d1b2a33;transition:.25s;pointer-events:none;font-size:13px;max-width:90vw}
+#toast.show{opacity:1;transform:translate(-50%,0)}#fallback{display:none;padding:28px;color:#fff;text-align:center}
+@media(max-width:760px){.layout{grid-template-columns:1fr;margin:14px auto;gap:14px}.stage{min-height:390px}#webgl-canvas{height:390px}.details{padding:21px}h1{font-size:24px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header><div class="brand">IK <span>SHOP</span></div><a href="./index.html">← Back to Shop</a></header>
+<main class="layout">
+<section class="stage" aria-label="Interactive 3D product preview">
+<div class="stage-label"><small>EXPLORE IN 3D</small><strong>Virtual Product Studio</strong></div>
+<canvas id="webgl-canvas"></canvas><div class="stage-hint">Drag to rotate · Pinch or scroll to zoom</div>
+<div id="fallback">3D preview could not load. Check your internet connection and reload.</div>
+</section>
+<section class="details">
+<div class="eyebrow">IK SHOP • 3D DEMO</div><h1 id="product-name">Sewing Machine Presser Foot</h1>
+<div class="sub" id="product-description">Explore a simple interactive 3D preview. Choose another demo product below.</div>
+<div class="price" id="product-price">₹220 <small>Demo price</small></div>
+<div class="eyebrow">CHOOSE A PRODUCT</div>
+<div class="choices" id="product-choices">
+<button class="choice active" type="button" data-product="0">Presser Foot · ₹220</button>
+<button class="choice" type="button" data-product="1">Needle Pack · ₹55</button>
+<button class="choice" type="button" data-product="2">Lal Mirch Powder · ₹99</button>
+</div>
+<button class="action" id="demo-button" type="button">Explore Selected Product</button>
+<p class="note">This is a 3D visual prototype. Models and prices are demo examples. It does not add items to your live IK Shop cart or place an order.</p>
+</section></main><div id="toast" role="status" aria-live="polite"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+"use strict";
+const products=[
+{name:"Sewing Machine Presser Foot",price:220,description:"A demo 3D model inspired by sewing machine accessories.",color:0xd7e0ec,shape:"metal"},
+{name:"White Crane Needle Pack",price:55,description:"A demo 3D product pack for industrial sewing machine needles.",color:0xf04483,shape:"pack"},
+{name:"Premium Lal Mirch Powder",price:99,description:"A demo 3D pouch preview for IK Shop grocery products.",color:0xb51f2e,shape:"pouch"}
+];
+const canvas=document.getElementById("webgl-canvas"),fallback=document.getElementById("fallback");
+const nameEl=document.getElementById("product-name"),descEl=document.getElementById("product-description"),priceEl=document.getElementById("product-price"),toast=document.getElementById("toast");
+let timer,scene,camera,renderer,group,active=0,dragging=false,lastX=0,lastY=0,targetX=0,targetY=0;
+function notify(message){toast.textContent=message;toast.classList.add("show");clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove("show"),2400)}
+function mat(color,metalness){return new THREE.MeshStandardMaterial({color,roughness:.38,metalness:metalness||.05})}
+function clearGroup(){while(group.children.length){const obj=group.children[0];group.remove(obj);obj.traverse(child=>{if(child.geometry)child.geometry.dispose();if(child.material){(Array.isArray(child.material)?child.material:[child.material]).forEach(m=>m.dispose())}})}}
+function build(item){
+clearGroup();const main=mat(item.color,item.shape==="metal"?.7:.05),dark=mat(0x17263a,.2);
+if(item.shape==="metal"){
+const base=new THREE.Mesh(new THREE.BoxGeometry(1.45,.34,.78),main);base.position.y=-.48;group.add(base);
+const neck=new THREE.Mesh(new THREE.BoxGeometry(.28,1,.35),main);neck.position.set(-.18,.12,0);group.add(neck);
+const toe=new THREE.Mesh(new THREE.BoxGeometry(.88,.16,.65),mat(0xe9edf4,.65));toe.position.set(.36,.57,0);group.add(toe);
+const screw=new THREE.Mesh(new THREE.CylinderGeometry(.13,.13,.48,32),dark);screw.rotation.z=Math.PI/2;screw.position.set(-.52,.18,0);group.add(screw);
+}else{
+const body=new THREE.Mesh(new THREE.BoxGeometry(item.shape==="pack"?1.35:1.28,item.shape==="pack"?1.65:1.8,item.shape==="pack"?.38:.48),main);group.add(body);
+const z=item.shape==="pack"?.205:.255;
+const label=new THREE.Mesh(new THREE.BoxGeometry(1.12,.52,.025),mat(0xfff4f8));label.position.set(0,.1,z);group.add(label);
+const stripe=new THREE.Mesh(new THREE.BoxGeometry(1.12,.11,.03),mat(0x0d1b2a));stripe.position.set(0,-.42,z+.02);group.add(stripe);
+}
+group.rotation.set(0,0,0);targetX=0;targetY=0;
+}
+function select(index){
+if(!Number.isInteger(index)||!products[index])return;active=index;const item=products[index];
+nameEl.textContent=item.name;descEl.textContent=item.description;priceEl.innerHTML="₹"+item.price+' <small>Demo price</small>';
+document.querySelectorAll(".choice").forEach((b,i)=>b.classList.toggle("active",i===index));if(group)build(item);
+}
+function init(){
+if(!window.THREE){fallback.style.display="block";return}
+try{
+scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(42,1,.1,100);camera.position.set(0,.35,5.2);
+renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.setClearColor(0,0);
+scene.add(new THREE.HemisphereLight(0xffffff,0x33445b,1.8));
+const key=new THREE.DirectionalLight(0xffffff,2.2);key.position.set(3,5,5);scene.add(key);
+const fill=new THREE.PointLight(0xf04483,.8);fill.position.set(-3,1,2);scene.add(fill);
+group=new THREE.Group();scene.add(group);
+const platform=new THREE.Mesh(new THREE.CylinderGeometry(1.5,1.65,.12,64),mat(0x314c6b,.25));platform.position.y=-1.2;scene.add(platform);
+function resize(){const w=canvas.clientWidth||canvas.parentElement.clientWidth,h=canvas.clientHeight||390;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}
+window.addEventListener("resize",resize);resize();build(products[0]);
+canvas.addEventListener("pointerdown",e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener("pointermove",e=>{if(!dragging)return;targetY+=(e.clientX-lastX)*.012;targetX+=(e.clientY-lastY)*.008;lastX=e.clientX;lastY=e.clientY});
+["pointerup","pointercancel","lostpointercapture"].forEach(name=>canvas.addEventListener(name,()=>dragging=false));
+canvas.addEventListener("wheel",e=>{e.preventDefault();camera.position.z=Math.max(3.4,Math.min(7,camera.position.z+e.deltaY*.004))},{passive:false});
+function animate(){requestAnimationFrame(animate);if(!dragging)targetY+=.003;group.rotation.y+=(targetY-group.rotation.y)*.08;group.rotation.x+=(targetX-group.rotation.x)*.08;renderer.render(scene,camera)}
+animate();
+}catch(err){console.error("3D store initialization failed:",err);fallback.style.display="block"}
+}
+document.getElementById("product-choices").addEventListener("click",e=>{const button=e.target.closest("button[data-product]");if(button)select(Number(button.dataset.product))});
+document.getElementById("demo-button").addEventListener("click",()=>notify(products[active].name+" selected — demo preview only."));
+init();
+})();
+</script>
+</body>
+</html>
